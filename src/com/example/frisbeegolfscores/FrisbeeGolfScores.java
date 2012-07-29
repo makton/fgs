@@ -11,12 +11,17 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.text.format.Time;
 import android.util.Log;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Button;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.google.android.maps.GeoPoint;
 
@@ -28,13 +33,17 @@ public class FrisbeeGolfScores extends Activity {
 	private boolean gpsStatus = false;
 	private Handler handler;
 	private Boolean connectionStatus = false; // network status?
-	private SQLiteDatabase database;
-	private DBAvaus dbAvaus = new DBAvaus(this);
 	public Context appContext;
 	public Context actContext;
 	
+    private Asetukset asetukset;
+    private SQLiteDatabase database;
+	private DBAvaus dbAvaus = new DBAvaus(this);
+    private DBAsetukset dbAsetukset = new DBAsetukset(this);        
+	
 	//näytön objektit
 	private Button btnAsetukset;
+	private Button btnPlayers;
 	private ProgressBar progress;
 	private TextView textView;
 	
@@ -49,64 +58,73 @@ public class FrisbeeGolfScores extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frisbee_golf_scores);
         
+        Log.d("FrisbeeGolfScores: ", "Ohjelma alkaa..");
+        Log.d("onCreate: ", String.valueOf(1));
+
     	//näytön objektien alustukset
         progress = (ProgressBar) findViewById(R.id.progressBar1);
         textView = (TextView) findViewById(R.id.textView1);
         btnAsetukset = (Button) findViewById(R.id.btnAsetukset);
-        
-        handler = new Handler();
-
-        Log.d("FrisbeeGolfScores: ", "Ohjelma alkaa..");
-		
-        //luetaan asetukset
-        Asetukset asetukset;
-        DBAsetukset dbAsetukset = new DBAsetukset(this);        
-        database = dbAvaus.open();
-        dbAsetukset.setDBInstance(database);
-        
-        //ohjelman kielisyys
-        asetukset = dbAsetukset.getAsetus(1);
-        kieli = asetukset.getKieli();
-        
-        //näytön objektien tekstien määritys kielisyyden mukaan
-        btnAsetukset.setText(kielisyys.strKieli_btnMainAsetukset[kieli]);
+        btnPlayers = (Button) findViewById(R.id.btnPlayers);
         
         //määritellään context
         actContext = this;
         appContext = this.getApplicationContext();
-        
-        //verkkoyhteys olemassa?
-        connectionStatus = sekalaiset.isNetworkAvailable(appContext);
 
-        Log.d("networkstatus: ", String.valueOf(connectionStatus));
+        handler = new Handler();
+
         /*
         dbAsetukset.addAsetus(new Asetukset("Frisbee Golf Scores","0.0.1",2));
         dbPelaajat.addPelaaja(new Pelaajat("Ravi3"));
         dbKierros.addKierros(new Kierros(1,"15.7.2012 16:24"));
         */
     }
-/*
+
     @Override
     protected void onStart() {
     	// The activity is about to become visible.
         super.onStart();
-    }
+        
+        Log.d("onStart ",String.valueOf(1));
 
+        //luetaan asetukset
+        if (!dbAvaus.status()){
+	        database = dbAvaus.open();
+	        dbAsetukset.setDBInstance(database);
+        }
+        asetukset = dbAsetukset.getAsetus(1);
+        kieli = asetukset.getKieli();
+        
+        Log.d("kieli : ", String.valueOf(kieli));
+        
+        //näytön objektien tekstien määritys kielisyyden mukaan
+                
+        btnAsetukset.setText(kielisyys.strKieli_btnMainAsetukset[kieli]);
+        
+        //btnPlayers.setText(now);     
+                
+        //verkkoyhteys olemassa?
+        connectionStatus = sekalaiset.isNetworkAvailable(appContext);
+
+        Log.d("networkstatus: ", String.valueOf(connectionStatus));
+    }
+/*
     @Override
     protected void onRestart() {
     	// The activity is about to become visible again.
         super.onRestart();
     }
-    
+ 
     @Override
     protected void onResume() {
     	// The activity has become visible (it is now "resumed").
     	super.onResume();
     	if (gpsStatus == true) {
     		gps.enableMyLocation();
-    	}    	
+    	}
+    	Log.d("onResume ",String.valueOf(1));
     }
-
+/*
     @Override
     protected void onPause() {
     	// Another activity is taking focus (this activity is about to be "paused").
@@ -115,24 +133,31 @@ public class FrisbeeGolfScores extends Activity {
     		gps.disableMyLocation();
     	}
     }
-
+*/
     @Override
     protected void onStop() {
     	// The activity is no longer visible (it is now "stopped")
         super.onStop();
+        Log.d("onStop ",String.valueOf(1));
         if (gpsStatus == true) {
         	gps.disableMyLocation();
         }
+        if (dbAvaus.status()){
+        	dbAvaus.close();
+        }
     }
-  */  
+   
     @Override
     protected void onDestroy() {
     	// The activity is about to be destroyed.
         super.onDestroy();
+        Log.d("onDestroy ",String.valueOf(1));
         if (gpsStatus == true) {
         	gps.disableMyLocation();
         }
-    	dbAvaus.close();
+        if (dbAvaus.status()){
+        	dbAvaus.close();
+        }
     }
     /*
     private Handler popupHandler = new Handler() {
@@ -150,7 +175,7 @@ public class FrisbeeGolfScores extends Activity {
 	public void onClick(View view) {
 		Log.d("Activity ",String.valueOf(0));
 		if (view == this.btnAsetukset) {
-			Log.d("Activity ",String.valueOf(1));
+			Log.d("Activity vaihtuu",String.valueOf(1));
 			Intent prefIntent = new Intent(this, ActivityAsetukset.class);
 			this.startActivity(prefIntent);
 		}

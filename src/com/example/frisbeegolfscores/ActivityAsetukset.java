@@ -47,12 +47,22 @@ public class ActivityAsetukset extends Activity {
 	private CheckedTextView chktxtJarjestys;
 	private TextView txtOtsikkoRaportti;
 	private CheckedTextView chktxtRaportti;
+	private ArrayAdapter <CharSequence> adapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activityasetukset);
 
+    }
+    
+    
+    @Override
+    protected void onStart() {
+    	// The activity is about to become visible.
+        super.onStart();
+        
         //mŠŠritellŠŠn context
         actContext = this;
         appContext = this.getApplicationContext();
@@ -73,8 +83,10 @@ public class ActivityAsetukset extends Activity {
         chktxtRaportti = (CheckedTextView) findViewById(R.id.chktxtRaportti);
         
         //luetaan asetukset
-        database = dbAvaus.open();
-        dbAsetukset.setDBInstance(database);
+        if (!dbAvaus.status()){
+	        database = dbAvaus.open();
+	        dbAsetukset.setDBInstance(database);
+        }
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
     	gps = asetukset.getUseGPS();
@@ -96,7 +108,7 @@ public class ActivityAsetukset extends Activity {
         txtOtsikkoRaportti.setText(kielisyys.strKieli_txtAsetuksetOtsikkoRaportti[kieli]);
         chktxtRaportti.setText(kielisyys.strKieli_txtAsetuksetRaportti[kieli]);
         
-        ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item );
+        adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (int x=0; x<=1;x++) {
         	adapter.add(kielisyys.kielet[x]);
@@ -174,30 +186,27 @@ public class ActivityAsetukset extends Activity {
 				}
 			}
         });
-
+		
         //mŠŠritellŠŠn valinnat asetuksien mukaisiksi
 		spinnerKieli.setSelection(kieli, true);
+		
         if (gps == 1) {
         	chktxtGps.setChecked(true);
         }
+        
         if (vuoro == 1) {
         	chktxtVuoro.setChecked(true);
         }
+        
         if (jarjestys == 1) {
         	chktxtJarjestys.setChecked(true);
         }
+        
         if (raportti == 1) {
         	chktxtRaportti.setChecked(true);
-        }
+        }        
     }
-    
-    /*
-    @Override
-    protected void onStart() {
-    	// The activity is about to become visible.
-        super.onStart();
-    }
-
+/*
     @Override
     protected void onRestart() {
     	// The activity is about to become visible again.
@@ -214,18 +223,13 @@ public class ActivityAsetukset extends Activity {
     protected void onPause() {
     	// Another activity is taking focus (this activity is about to be "paused").
     	super.onPause();
-    }
+    }*/
 
     @Override
     protected void onStop() {
     	// The activity is no longer visible (it is now "stopped")
         super.onStop();
-    }
-  */  
-    @Override
-    protected void onDestroy() {
-    	// The activity is about to be destroyed.
-        super.onDestroy();
+        
         //tallennetaan asetukset
         if (muutoksia == 1) {
             asetukset.setKieli(kieli);
@@ -235,7 +239,18 @@ public class ActivityAsetukset extends Activity {
         	asetukset.setRaportinmuoto(raportti);
         	dbAsetukset.updateAsetukset(asetukset);
         }
-    	dbAvaus.close();
-    }
+        
+        //suljetaan kanta
+        if (dbAvaus.status()){
+        	dbAvaus.close();
+        }
 
+    }
+/*    
+    @Override
+    protected void onDestroy() {
+    	// The activity is about to be destroyed.
+        super.onDestroy();
+    }
+*/
 }

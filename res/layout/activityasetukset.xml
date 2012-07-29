@@ -3,8 +3,18 @@
   android:id="@+id/scroll" android:layout_width="fill_parent"
   android:layout_height="wrap_content">
 
-    <TableLayout
+        <TableLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:id="@+id/tableRowx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+    
+    <TableLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <TableRow
@@ -73,7 +83,7 @@
             <TextView
                 android:id="@+id/txtKieli"
                 style="@android:style/TextAppearance.Small"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Small Text"
@@ -82,7 +92,7 @@
             <Spinner
                 android:id="@+id/spinnerKieli"
                 style="@android:style/TextAppearance.Small"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </TableRow>
@@ -277,4 +287,8 @@
                 android:paddingTop="2dp" />
         </TableRow>
     </TableLayout>
+    
+            </TableRow>
+    </TableLayout>
+    
 </ScrollView>

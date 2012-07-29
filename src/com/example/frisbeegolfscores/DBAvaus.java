@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class DBAvaus {
 
-	public SQLiteDatabase database;
+	public SQLiteDatabase database = null;
 	private DBAlustus dbAlustus;
 	
 	public DBAvaus(Context context) {
@@ -27,11 +27,20 @@ public class DBAvaus {
 
 	public void close() {
 		Log.d("DBAvaus: ", "Suljetaan yhteys..");
-		dbAlustus.close();
+		if (database != null) {
+			dbAlustus.close();
+		}
 	}
 
 	public SQLiteDatabase Instance() {
 		return database;
+	}
+	
+	public boolean status() {
+		if (database == null) {
+			return false;
+		}
+		return database.isOpen();
 	}
 	
 }

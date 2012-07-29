@@ -3,6 +3,8 @@ package com.example.frisbeegolfscores;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -93,5 +95,12 @@ public class Sekalaiset {
 		Toast msg = Toast.makeText(context, message, Toast.LENGTH_LONG);
 		//msg.setGravity(Gravity.CENTER, msg.getXOffset() / 2, msg.getYOffset() / 2);
 		msg.show();
+	}
+	
+	public String haeAika() {
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");   
+        Date date = new Date();
+        String now = formatter.format(date);
+        return now;
 	}
 }
