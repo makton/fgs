@@ -11,17 +11,12 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.text.format.Time;
 import android.util.Log;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Button;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.google.android.maps.GeoPoint;
 
@@ -43,7 +38,8 @@ public class FrisbeeGolfScores extends Activity {
 	
 	//näytön objektit
 	private Button btnAsetukset;
-	private Button btnPlayers;
+	private Button btnPelaajat;
+	private Button btnTiimit;
 	private ProgressBar progress;
 	private TextView textView;
 	
@@ -65,7 +61,8 @@ public class FrisbeeGolfScores extends Activity {
         progress = (ProgressBar) findViewById(R.id.progressBar1);
         textView = (TextView) findViewById(R.id.textView1);
         btnAsetukset = (Button) findViewById(R.id.btnAsetukset);
-        btnPlayers = (Button) findViewById(R.id.btnPlayers);
+        btnPelaajat = (Button) findViewById(R.id.btnPelaajat);
+        btnTiimit = (Button) findViewById(R.id.btnTiimit);
         
         //määritellään context
         actContext = this;
@@ -100,8 +97,8 @@ public class FrisbeeGolfScores extends Activity {
         //näytön objektien tekstien määritys kielisyyden mukaan
                 
         btnAsetukset.setText(kielisyys.strKieli_btnMainAsetukset[kieli]);
-        
-        //btnPlayers.setText(now);     
+        btnPelaajat.setText(kielisyys.strKieli_btnMainPelaajat[kieli]);
+        btnTiimit.setText(kielisyys.strKieli_btnMainTiimit[kieli]);
                 
         //verkkoyhteys olemassa?
         connectionStatus = sekalaiset.isNetworkAvailable(appContext);
@@ -146,7 +143,7 @@ public class FrisbeeGolfScores extends Activity {
         	dbAvaus.close();
         }
     }
-   
+/*   
     @Override
     protected void onDestroy() {
     	// The activity is about to be destroyed.

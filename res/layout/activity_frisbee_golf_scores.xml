@@ -13,7 +13,7 @@
         android:text="Stat new course" />
 
     <Button
-        android:id="@+id/btnPlayers"
+        android:id="@+id/btnPelaajat"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,52 +34,21 @@
         android:text="Cources" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnTiimit"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnPlayers"
-        android:layout_alignBottom="@+id/btnPlayers"
-        android:layout_toRightOf="@+id/btnPlayers"
+        android:layout_alignBaseline="@+id/btnPelaajat"
+        android:layout_alignBottom="@+id/btnPelaajat"
+        android:layout_toRightOf="@+id/btnPelaajat"
         android:text="Teams" />
-
-    <Button
-        android:id="@+id/button5"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button4"
-        android:layout_toRightOf="@+id/button2"
-        android:onClick="readHttpInfo"
-        android:text="http" />
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="false"
-        android:max="10"
-        android:padding="4dip" >
-    </ProgressBar>
-
-    <Button
-        android:id="@+id/button6"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button5"
-        android:layout_alignTop="@+id/button2"
-        android:onClick="startGps"
-        android:text="GPS" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnPlayers"
-        android:layout_alignRight="@+id/button6"
-        android:layout_below="@+id/btnPlayers"
+        android:layout_alignLeft="@+id/btnPelaajat"
+        android:layout_below="@+id/btnPelaajat"
         android:layout_marginTop="80dp"
         android:text="TextView" />
 
@@ -88,10 +57,42 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnPlayers"
-        android:layout_below="@+id/btnPlayers"
+        android:layout_alignLeft="@+id/btnPelaajat"
+        android:layout_below="@+id/btnPelaajat"
         android:layout_marginTop="15dp"
         android:onClick="onClick"
         android:text="Asetukset" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/btnPelaajat"
+        android:indeterminate="false"
+        android:max="10"
+        android:padding="4dip" />
+
+    <Button
+        android:id="@+id/button5"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_toRightOf="@+id/button2"
+        android:onClick="readHttpInfo"
+        android:text="http" />
+
+    <Button
+        android:id="@+id/button6"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnPelaajat"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="26dp"
+        android:onClick="startGps"
+        android:text="GPS" />
 
 </RelativeLayout>
