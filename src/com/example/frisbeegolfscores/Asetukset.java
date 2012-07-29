@@ -113,7 +113,7 @@ public class Asetukset {
 	}
 
 	public int getUseGPS() {
-		return id;
+		return useGPS;
 	}
 	
 	public void setUseGPS(int useGPS) {

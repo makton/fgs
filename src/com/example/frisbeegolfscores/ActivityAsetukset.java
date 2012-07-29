@@ -1,9 +1,12 @@
 package com.example.frisbeegolfscores;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -17,11 +20,12 @@ public class ActivityAsetukset extends Activity {
 	
 	private Kielisyys kielisyys = new Kielisyys();
 	private SQLiteDatabase database;
-	private DBAvaus dbAvaus = new DBAvaus(this);
-	private DBAsetukset dbAsetukset = new DBAsetukset(this);
+	private DBAvaus dbAvaus;// = new DBAvaus(this);
+	private DBAsetukset dbAsetukset;// = new DBAsetukset(this);
     private Asetukset asetukset;
 	public Context appContext;
 	public Context actContext;
+	public Context sqlContext;
 	
 	//asetukset
 	public int muutoksia = 0;
@@ -55,6 +59,11 @@ public class ActivityAsetukset extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activityasetukset);
 
+        //application controller
+        ApplicationController  mApplication = (ApplicationController)getApplicationContext();
+		//String username = mApplication.getUsername();
+		//String password = mApplication.getPassword();
+
     }
     
     
@@ -66,7 +75,11 @@ public class ActivityAsetukset extends Activity {
         //määritellään context
         actContext = this;
         appContext = this.getApplicationContext();
+        sqlContext = this.getApplication();
 
+        dbAvaus = new DBAvaus(sqlContext);
+    	dbAsetukset = new DBAsetukset(sqlContext);
+        
         //näytön objektien alustukset
         txtOtsikkoVersio = (TextView) findViewById(R.id.txtOtsikkoVersio);
         txtVersio = (TextView) findViewById(R.id.txtVersio);
@@ -93,7 +106,17 @@ public class ActivityAsetukset extends Activity {
     	vuoro = asetukset.getVuoronvaihto();
     	jarjestys = asetukset.getPelijarjestys();
     	raportti = asetukset.getRaportinmuoto();
-    	
+
+        // Reading all asetukset
+        Log.d("FrisbeeGolfScores: ", "Haetaan kaikki asetukset..");
+        List<Asetukset> Listasetukset = dbAsetukset.haeAsetukset();
+
+        for (Asetukset cn : Listasetukset) {
+            String log = "Id: "+cn.getId()+" ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys();
+                // Writing Contacts to log
+            Log.d("Asetukset (settings) : ", log);
+        }
+
     	//määritellään layoutin tekstit kielisyyden mukaisesti
         txtOtsikkoVersio.setText(kielisyys.strKieli_txtAsetuksetOtsikkoVersio[kieli]);
         txtVersio.setText(kielisyys.strKieli_txtAsetuksetVersio[kieli] + " " + asetukset.getVersio());

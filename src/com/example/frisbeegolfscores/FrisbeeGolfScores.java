@@ -1,6 +1,7 @@
 package com.example.frisbeegolfscores;
 
 import java.io.InputStream;
+import java.util.List;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,11 +31,12 @@ public class FrisbeeGolfScores extends Activity {
 	private Boolean connectionStatus = false; // network status?
 	public Context appContext;
 	public Context actContext;
+	public Context sqlContext;
 	
     private Asetukset asetukset;
     private SQLiteDatabase database;
-	private DBAvaus dbAvaus = new DBAvaus(this);
-    private DBAsetukset dbAsetukset = new DBAsetukset(this);        
+	private DBAvaus dbAvaus;// = new DBAvaus(this);
+    private DBAsetukset dbAsetukset;// = new DBAsetukset(this);        
 	
 	//näytön objektit
 	private Button btnAsetukset;
@@ -67,8 +69,15 @@ public class FrisbeeGolfScores extends Activity {
         //määritellään context
         actContext = this;
         appContext = this.getApplicationContext();
+        sqlContext = this.getApplication();
 
         handler = new Handler();
+
+        //application controller
+        ApplicationController  mApplication = (ApplicationController)getApplicationContext();
+		//String username = mApplication.getUsername();
+		//String password = mApplication.getPassword();
+		
 
         /*
         dbAsetukset.addAsetus(new Asetukset("Frisbee Golf Scores","0.0.1",2));
@@ -84,6 +93,9 @@ public class FrisbeeGolfScores extends Activity {
         
         Log.d("onStart ",String.valueOf(1));
 
+        dbAvaus = new DBAvaus(sqlContext);
+    	dbAsetukset = new DBAsetukset(sqlContext);
+        
         //luetaan asetukset
         if (!dbAvaus.status()){
 	        database = dbAvaus.open();
@@ -91,6 +103,16 @@ public class FrisbeeGolfScores extends Activity {
         }
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
+        
+        // Reading all asetukset
+        Log.d("FrisbeeGolfScores: ", "Haetaan kaikki asetukset..");
+        List<Asetukset> Listasetukset = dbAsetukset.haeAsetukset();
+
+        for (Asetukset cn : Listasetukset) {
+            String log = "Id: "+cn.getId()+" ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys();
+                // Writing Contacts to log
+            Log.d("Asetukset (main) : ", log);
+        }
         
         Log.d("kieli : ", String.valueOf(kieli));
         
@@ -140,10 +162,10 @@ public class FrisbeeGolfScores extends Activity {
         	gps.disableMyLocation();
         }
         if (dbAvaus.status()){
-        	dbAvaus.close();
+        	//dbAvaus.close();
         }
     }
-/*   
+
     @Override
     protected void onDestroy() {
     	// The activity is about to be destroyed.

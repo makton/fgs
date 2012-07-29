@@ -88,7 +88,7 @@ public class DBAsetukset {
 		database.delete(DBAlustus.TABLE_Asetukset, DBAlustus.COLUMN_Asetukset_ID + " = " + id, null);
 	}
 	
- // Getting All Contacts
+ // Getting All Asetukset
     public List<Asetukset> haeAsetukset() {
         List<Asetukset> listAsetukset = new ArrayList<Asetukset>();
 
@@ -102,8 +102,8 @@ public class DBAsetukset {
             	asetukset.setNimi(cursor.getString(1));
             	asetukset.setVersio(cursor.getString(2));
             	asetukset.setDb_versio(Integer.parseInt(cursor.getString(3)));
-            	asetukset.setPelijarjestys(Integer.parseInt(cursor.getString(4)));
-            	asetukset.setVuoronvaihto(Integer.parseInt(cursor.getString(5)));
+            	asetukset.setVuoronvaihto(Integer.parseInt(cursor.getString(4)));
+            	asetukset.setPelijarjestys(Integer.parseInt(cursor.getString(5)));
             	asetukset.setKieli(Integer.parseInt(cursor.getString(6)));
             	asetukset.setRaportinmuoto(Integer.parseInt(cursor.getString(7)));
             	asetukset.setUseGPS(Integer.parseInt(cursor.getString(8)));
@@ -114,7 +114,7 @@ public class DBAsetukset {
  
 		// Make sure to close the cursor
 		cursor.close();
-        // return contact list        
+        // return asetukset list        
         return listAsetukset;
     }
 
