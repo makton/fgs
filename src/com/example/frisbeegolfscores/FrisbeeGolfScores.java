@@ -32,6 +32,7 @@ public class FrisbeeGolfScores extends Activity {
 	public Context appContext;
 	public Context actContext;
 	public Context sqlContext;
+	public Context mContext;
 	
 	public ApplicationController  mApplication;
 	
@@ -76,10 +77,7 @@ public class FrisbeeGolfScores extends Activity {
         handler = new Handler();
 
         //application controller
-        mApplication = (ApplicationController)getApplicationContext();
-		//String username = mApplication.getUsername();
-		//String password = mApplication.getPassword();
-		
+        mApplication = ((ApplicationController)getApplicationContext());
 
         /*
         dbAsetukset.addAsetus(new Asetukset("Frisbee Golf Scores","0.0.1",2));
@@ -95,17 +93,10 @@ public class FrisbeeGolfScores extends Activity {
         
         Log.d("onStart ",String.valueOf(1));
         
-        //sqlContext = mApplication.getInstance();
-        dbAvaus = new DBAvaus(sqlContext);
-    	dbAsetukset = new DBAsetukset(sqlContext);
-    	
-        //luetaan asetukset
-        if (!dbAvaus.status()){
-	        database = dbAvaus.open();
-	        mApplication.setDBInstance(database);
-	        dbAsetukset.setDBInstance(database);
-        }
-        
+        mContext = mApplication.getInstance();
+        database = mApplication.getInstance().getDBInstance();
+        dbAsetukset = new DBAsetukset(mContext);
+	    dbAsetukset.setDBInstance(database);
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
         

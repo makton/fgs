@@ -7,7 +7,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 
 public class ApplicationController extends Application {
 	//Application wide instance variables
@@ -25,17 +24,16 @@ public class ApplicationController extends Application {
     private int aktiivinenRata = 0;
     private int aktiivinenVayla = 0;
 
-	//@Override
-	public void onCreate(Bundle b) {
+	@Override
+	public void onCreate() {
 		super.onCreate();
-	
+		
 	    //mŠŠritellŠŠn context
 		singleton = this;
 	    appContext = this.getApplicationContext();
+	    
+		openDB();
 	}
-/*
-	protected ApplicationController() {	
-	}*/
 	
 	public ApplicationController getInstance() {
 		if (singleton == null) {
@@ -44,63 +42,21 @@ public class ApplicationController extends Application {
 		return singleton;
 	}
 	
-	public Context getAppInstance(){
+	public Context getAppInstance() {
 		return appContext;
 	}
 
-	public void openDB(){
+	public void openDB() {
         dbAvaus = new DBAvaus(appContext);
         if (!dbAvaus.status()){
 	        database = dbAvaus.open();
-        }		
+        }
 	}
 	
 	public void closeDB() {
-        if (dbAvaus.status()){
+        if (database != null && dbAvaus.status()){
         	dbAvaus.close();
         }		
-	}
-	
-	public void openDBAsetukset(){
-        DBAsetukset dbAsetukset = new DBAsetukset(this);	
-        dbAsetukset = new DBAsetukset(appContext);
-		dbAsetukset.setDBInstance(database);
-	}
-	
-	public void openDBPelaajat(){
-        DBPelaajat dbPelaajat = new DBPelaajat(this);
-        dbPelaajat = new DBPelaajat(appContext);
-        dbPelaajat.setDBInstance(database);
-	}
-
-	public void openDBJoukkueet(){
-        DBJoukkueet dbJoukkueet = new DBJoukkueet(this);
-        dbJoukkueet = new DBJoukkueet(appContext);
-        dbJoukkueet.setDBInstance(database);
-	}
-
-	public void openDBKaupungit(){
-        DBKaupungit dbKaupungit = new DBKaupungit(this);
-        dbKaupungit = new DBKaupungit(appContext);
-        dbKaupungit.setDBInstance(database);
-	}
-
-	public void openDBRadat(){
-        DBRadat dbRadat = new DBRadat(this);
-        dbRadat = new DBRadat(appContext);
-        dbRadat.setDBInstance(database);
-	}
-
-	public void openDBVaylat(){
-        DBVaylat dbVaylat = new DBVaylat(this);
-        dbVaylat = new DBVaylat(appContext);
-        dbVaylat.setDBInstance(database);
-	}
-
-	public void openDBKierros(){
-        DBKierros dbKierros = new DBKierros(this);
-        dbKierros = new DBKierros(appContext);
-        dbKierros.setDBInstance(database);
 	}
 
 	public SQLiteDatabase getDBInstance() {
@@ -117,13 +73,64 @@ public class ApplicationController extends Application {
 		}
 		return database.isOpen();
 	}
-	
-	public void closeDBInstance() {
-		if (database != null && database.isOpen()) {
-			dbAvaus.close();
+/*	
+	public DBAsetukset openDBAsetukset() {
+		if (dbAvaus.status()) {
+			DBAsetukset dbAsetukset = new DBAsetukset(appContext);
+			dbAsetukset = new DBAsetukset(appContext);
+			dbAsetukset.setDBInstance(database);
+		}
+		return dbAsetukset;
+	}
+
+	public void openDBPelaajat() {
+		if (dbAvaus.status()) {
+			DBPelaajat dbPelaajat = new DBPelaajat(appContext);
+			dbPelaajat = new DBPelaajat(appContext);
+			dbPelaajat.setDBInstance(database);
 		}
 	}
-	
+
+	public void openDBJoukkueet() {
+		if (dbAvaus.status()) {
+			DBJoukkueet dbJoukkueet = new DBJoukkueet(appContext);
+			dbJoukkueet = new DBJoukkueet(appContext);
+			dbJoukkueet.setDBInstance(database);
+		}
+	}
+
+	public void openDBKaupungit() {
+		if (dbAvaus.status()) {
+			DBKaupungit dbKaupungit = new DBKaupungit(appContext);
+			dbKaupungit = new DBKaupungit(appContext);
+			dbKaupungit.setDBInstance(database);
+		}
+	}
+
+	public void openDBRadat() {
+		if (dbAvaus.status()) {
+			DBRadat dbRadat = new DBRadat(appContext);
+			dbRadat = new DBRadat(appContext);
+			dbRadat.setDBInstance(database);
+		}
+	}
+
+	public void openDBVaylat() {
+		if (dbAvaus.status()) {
+			DBVaylat dbVaylat = new DBVaylat(appContext);
+			dbVaylat = new DBVaylat(appContext);
+			dbVaylat.setDBInstance(database);
+		}
+	}
+
+	public void openDBKierros() {
+		if (dbAvaus.status()) {
+			DBKierros dbKierros = new DBKierros(appContext);
+			dbKierros = new DBKierros(appContext);
+			dbKierros.setDBInstance(database);
+		}
+	}
+*/
     public List<Integer> getAktiivisetPelaajat() {
 		return aktiivisetPelaajat;
 	}
