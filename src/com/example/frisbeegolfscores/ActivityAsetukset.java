@@ -1,11 +1,16 @@
 package com.example.frisbeegolfscores;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +21,10 @@ import android.widget.CheckedTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class ActivityAsetukset extends Activity {
+public class ActivityAsetukset extends PreferenceActivity {
+	
+    protected Method mLoadHeaders = null;
+    protected Method mHasHeaders = null;
 	
 	private Kielisyys kielisyys = new Kielisyys();
 	private SQLiteDatabase database;
@@ -34,7 +42,7 @@ public class ActivityAsetukset extends Activity {
 	public int vuoro = 0;
 	public int jarjestys = 0;
 	public int raportti = 0;
-	
+	/*
 	String[] spinnerKieliValues = new String[]{};
 	
 	//näytön objektit
@@ -52,19 +60,31 @@ public class ActivityAsetukset extends Activity {
 	private TextView txtOtsikkoRaportti;
 	private CheckedTextView chktxtRaportti;
 	private ArrayAdapter <CharSequence> adapter;
+*/
 
+    @SuppressWarnings("deprecation")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		try {
+			mLoadHeaders = getClass().getMethod("loadHeadersFromResource",int.class, List.class);
+			mHasHeaders = getClass().getMethod("hasHeaders");
+		} catch (NoSuchMethodException e) {
+		}
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_asetukset);
+		if (!isNewV11Prefs()) {
+			addPreferencesFromResource(R.xml.app_prefs_cat1);
+			addPreferencesFromResource(R.xml.app_prefs_cat2);
+			addPreferencesFromResource(R.xml.app_prefs_cat3);
+		}
+		// addPreferencesFromResource(R.xml.preferences);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activityasetukset);
+		// application controller
+		ApplicationController mApplication = (ApplicationController) getApplicationContext();
+		// String username = mApplication.getUsername();
+		// String password = mApplication.getPassword();
 
-        //application controller
-        ApplicationController  mApplication = (ApplicationController)getApplicationContext();
-		//String username = mApplication.getUsername();
-		//String password = mApplication.getPassword();
-
-    }
+	}
     
     
     @Override
@@ -76,10 +96,7 @@ public class ActivityAsetukset extends Activity {
         actContext = this;
         appContext = this.getApplicationContext();
         sqlContext = this.getApplication();
-
-        dbAvaus = new DBAvaus(sqlContext);
-    	dbAsetukset = new DBAsetukset(sqlContext);
-        
+        /*
         //näytön objektien alustukset
         txtOtsikkoVersio = (TextView) findViewById(R.id.txtOtsikkoVersio);
         txtVersio = (TextView) findViewById(R.id.txtVersio);
@@ -94,12 +111,17 @@ public class ActivityAsetukset extends Activity {
         chktxtJarjestys = (CheckedTextView) findViewById(R.id.chktxtJarjestys);
         txtOtsikkoRaportti = (TextView) findViewById(R.id.txtOtsikkoRaportti);
         chktxtRaportti = (CheckedTextView) findViewById(R.id.chktxtRaportti);
+        */
         
         //luetaan asetukset
-        if (!dbAvaus.status()){
+        dbAvaus = new DBAvaus(sqlContext);
+    	dbAsetukset = new DBAsetukset(sqlContext);
+        
+    	if (!dbAvaus.status()){
 	        database = dbAvaus.open();
 	        dbAsetukset.setDBInstance(database);
         }
+      
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
     	gps = asetukset.getUseGPS();
@@ -116,7 +138,7 @@ public class ActivityAsetukset extends Activity {
                 // Writing Contacts to log
             Log.d("Asetukset (settings) : ", log);
         }
-
+/*
     	//määritellään layoutin tekstit kielisyyden mukaisesti
         txtOtsikkoVersio.setText(kielisyys.strKieli_txtAsetuksetOtsikkoVersio[kieli]);
         txtVersio.setText(kielisyys.strKieli_txtAsetuksetVersio[kieli] + " " + asetukset.getVersio());
@@ -227,7 +249,7 @@ public class ActivityAsetukset extends Activity {
         
         if (raportti == 1) {
         	chktxtRaportti.setChecked(true);
-        }        
+        } */       
     }
 /*
     @Override
@@ -276,4 +298,41 @@ public class ActivityAsetukset extends Activity {
         super.onDestroy();
     }
 */
+    
+    /**
+     * Checks to see if using new v11+ way of handling PrefsFragments.
+     * @return Returns false pre-v11, else checks to see if using headers.
+     */
+    public boolean isNewV11Prefs() {
+        if (mHasHeaders!=null && mLoadHeaders!=null) {
+            try {
+                return (Boolean)mHasHeaders.invoke(this);
+            } catch (IllegalArgumentException e) {
+            } catch (IllegalAccessException e) {
+            } catch (InvocationTargetException e) {
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public void onBuildHeaders(List<Header> aTarget) {
+        try {
+            mLoadHeaders.invoke(this,new Object[]{R.xml.pref_headers,aTarget});
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+        }  
+    }
+ 
+    @SuppressLint("NewApi")
+    static public class PrefsFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle aSavedState) {
+            super.onCreate(aSavedState);
+            Context anAct = getActivity().getApplicationContext();
+            int thePrefRes = anAct.getResources().getIdentifier(getArguments().getString("pref-resource"),"xml",anAct.getPackageName());
+            addPreferencesFromResource(thePrefRes);
+        }
+    }
 }

@@ -18,8 +18,6 @@
 	<string name="settings_caption_metric">Metrics</string>
 	<string name="settings_caption_generic">Generic settings</string>
 	<string name="settings_caption_location">Location</string>
-	<string name="settings_caption_advance">Auto advance</string>
-	<string name="settings_caption_order">Playing order</string>
 	<string name="settings_caption_htmlsource">Course data source</string>
 	<string name="settings_about">Version : </string>
 	<string name="settings_language">Program language</string>

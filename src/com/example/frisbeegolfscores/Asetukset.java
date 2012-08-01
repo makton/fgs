@@ -11,6 +11,7 @@ public class Asetukset {
 	private int vuoronvaihto; // miten vaihdetaan vuoro, automaattisesti, manuaalisesti, tms
 	private int pelijarjestys; // miten määritellään pelijärjestys? random, handicap, tms
 	private int kieli; // ohjelman kieli
+	private int metric; // ohjelman kieli
 	private int raportinmuoto; // html, csv, tms
 	private int useGPS; // GPS käytössä?
 	
@@ -24,19 +25,20 @@ public class Asetukset {
 	}
 	
 	public Asetukset(String nimi, String versio, int db_versio,
-			int vuoronvaihto, int pelijarjestys, int kieli, int raportinmuoto, int useGPS) {
+			int vuoronvaihto, int pelijarjestys, int kieli, int metric, int raportinmuoto, int useGPS) {
 		this.nimi = nimi;
 		this.versio = versio;
 		this.db_versio = db_versio;
 		this.vuoronvaihto = vuoronvaihto;
 		this.pelijarjestys = pelijarjestys;
 		this.kieli = kieli;
+		this.metric = metric;
 		this.raportinmuoto = raportinmuoto;
 		this.useGPS = useGPS;
 	}
 
 	public Asetukset(int id, String nimi, String versio, int db_versio,
-			int vuoronvaihto, int pelijarjestys, int kieli, int raportinmuoto, int useGPS) {
+			int vuoronvaihto, int pelijarjestys, int kieli, int metric, int raportinmuoto, int useGPS) {
 		this.id = id;
 		this.nimi = nimi;
 		this.versio = versio;
@@ -44,6 +46,7 @@ public class Asetukset {
 		this.vuoronvaihto = vuoronvaihto;
 		this.pelijarjestys = pelijarjestys;
 		this.kieli = kieli;
+		this.metric = metric;
 		this.raportinmuoto = raportinmuoto;
 		this.useGPS = useGPS;
 	}
@@ -102,6 +105,14 @@ public class Asetukset {
 
 	public void setKieli(int kieli) {
 		this.kieli = kieli;
+	}
+
+	public int getMetric() {
+		return metric;
+	}
+
+	public void setMetric(int metric) {
+		this.metric = metric;
 	}
 
 	public int getRaportinmuoto() {

@@ -8,7 +8,7 @@ import android.util.Log;
 public class DBAlustus extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "frisbeegolfscores.db";
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
 	// taulut
 	public static final String TABLE_Asetukset = "asetukset";
@@ -29,6 +29,7 @@ public class DBAlustus extends SQLiteOpenHelper {
 	public static final String COLUMN_Asetukset_vuoronvaihto = "vuoronvaihto";
 	public static final String COLUMN_Asetukset_pelijarjestys = "pelijarjestys";
 	public static final String COLUMN_Asetukset_kieli = "kieli";
+	public static final String COLUMN_Asetukset_metric = "metric";
 	public static final String COLUMN_Asetukset_raportinmuoto = "raportinmuoto";
 	public static final String COLUMN_Asetukset_useGPS = "useGPS";
 
@@ -108,6 +109,7 @@ public class DBAlustus extends SQLiteOpenHelper {
 			+ COLUMN_Asetukset_vuoronvaihto + " INTEGER not null, "
 			+ COLUMN_Asetukset_pelijarjestys + " INTEGER not null, "
 			+ COLUMN_Asetukset_kieli + " INTEGER not null, "
+			+ COLUMN_Asetukset_metric + " INTEGER not null, "
 			+ COLUMN_Asetukset_raportinmuoto + " INTEGER not null, "
 			+ COLUMN_Asetukset_useGPS + " INTEGER not null "
 			+ ");";
@@ -121,6 +123,7 @@ public class DBAlustus extends SQLiteOpenHelper {
 			+ COLUMN_Asetukset_vuoronvaihto + ", "
 			+ COLUMN_Asetukset_pelijarjestys + ", "
 			+ COLUMN_Asetukset_kieli  + ", "
+			+ COLUMN_Asetukset_metric  + ", "
 			+ COLUMN_Asetukset_raportinmuoto + ", "
 			+ COLUMN_Asetukset_useGPS
 			+ ") values ("
@@ -130,6 +133,7 @@ public class DBAlustus extends SQLiteOpenHelper {
 			+ "1,"
 			+ "0,"
 			+ "0,"
+			+ "1,"
 			+ "0,"
 			+ "0"
 			+ ");";

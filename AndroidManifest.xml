@@ -4,19 +4,22 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"  />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    
+
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="15" />
 
     <application
-		android:name=".android.controller.ApplicationController"
+        android:name=".ApplicationController"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Main" >
-        <uses-library android:required="true" android:name="com.google.android.maps" />
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="true" />
+
         <activity
             android:name=".FrisbeeGolfScores"
             android:label="@string/title_activity_frisbee_golf_scores" >
@@ -27,7 +30,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityAsetukset">
+            android:name=".ActivityAsetukset"
+            android:enabled="true"
+            android:label="@string/settings_taskbar_caption" >
+            <intent-filter>
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
         </activity>
     </application>
 

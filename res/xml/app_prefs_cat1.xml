@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="app_prefs_cat1"
+        android:title="@string/settings_title_cat1" >
+        <ListPreference
+            android:defaultValue="English"
+            android:entries="@array/arrayLanguages"
+            android:entryValues="@array/arrayLanguagesValues"
+            android:key="lstLanguages"
+            android:summary="@string/settings_language"
+            android:title="@string/settings_caption_language" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="chkMetric"
+            android:summary="@string/settings_metric"
+            android:title="@string/settings_caption_metric" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

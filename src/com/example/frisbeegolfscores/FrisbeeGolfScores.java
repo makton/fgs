@@ -33,6 +33,8 @@ public class FrisbeeGolfScores extends Activity {
 	public Context actContext;
 	public Context sqlContext;
 	
+	public ApplicationController  mApplication;
+	
     private Asetukset asetukset;
     private SQLiteDatabase database;
 	private DBAvaus dbAvaus;// = new DBAvaus(this);
@@ -74,7 +76,7 @@ public class FrisbeeGolfScores extends Activity {
         handler = new Handler();
 
         //application controller
-        ApplicationController  mApplication = (ApplicationController)getApplicationContext();
+        mApplication = (ApplicationController)getApplicationContext();
 		//String username = mApplication.getUsername();
 		//String password = mApplication.getPassword();
 		
@@ -92,15 +94,18 @@ public class FrisbeeGolfScores extends Activity {
         super.onStart();
         
         Log.d("onStart ",String.valueOf(1));
-
+        
+        //sqlContext = mApplication.getInstance();
         dbAvaus = new DBAvaus(sqlContext);
     	dbAsetukset = new DBAsetukset(sqlContext);
-        
+    	
         //luetaan asetukset
         if (!dbAvaus.status()){
 	        database = dbAvaus.open();
+	        mApplication.setDBInstance(database);
 	        dbAsetukset.setDBInstance(database);
         }
+        
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
         

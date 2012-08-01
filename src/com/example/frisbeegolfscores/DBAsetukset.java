@@ -27,6 +27,7 @@ public class DBAsetukset {
 			DBAlustus.COLUMN_Asetukset_vuoronvaihto,
 			DBAlustus.COLUMN_Asetukset_pelijarjestys,
 			DBAlustus.COLUMN_Asetukset_kieli,
+			DBAlustus.COLUMN_Asetukset_metric,
 			DBAlustus.COLUMN_Asetukset_raportinmuoto,
 			DBAlustus.COLUMN_Asetukset_useGPS
 			};
@@ -46,6 +47,7 @@ public class DBAsetukset {
 		values.put(DBAlustus.COLUMN_Asetukset_vuoronvaihto, asetukset.getVuoronvaihto());
 		values.put(DBAlustus.COLUMN_Asetukset_pelijarjestys, asetukset.getPelijarjestys());
 		values.put(DBAlustus.COLUMN_Asetukset_kieli, asetukset.getKieli());
+		values.put(DBAlustus.COLUMN_Asetukset_metric, asetukset.getMetric());
 		values.put(DBAlustus.COLUMN_Asetukset_raportinmuoto, asetukset.getRaportinmuoto());
 		values.put(DBAlustus.COLUMN_Asetukset_useGPS, asetukset.getUseGPS());
 		
@@ -57,11 +59,11 @@ public class DBAsetukset {
 
     // Getting single
     public Asetukset getAsetus(int id) { 
-        Cursor cursor = database.query(DBAlustus.TABLE_Asetukset, new String[] { DBAlustus.COLUMN_Asetukset_ID, DBAlustus.COLUMN_Asetukset_nimi, DBAlustus.COLUMN_Asetukset_versio, DBAlustus.COLUMN_Asetukset_db_versio, DBAlustus.COLUMN_Asetukset_vuoronvaihto, DBAlustus.COLUMN_Asetukset_pelijarjestys, DBAlustus.COLUMN_Asetukset_kieli, DBAlustus.COLUMN_Asetukset_raportinmuoto, DBAlustus.COLUMN_Asetukset_useGPS }, DBAlustus.COLUMN_Asetukset_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = database.query(DBAlustus.TABLE_Asetukset, new String[] { DBAlustus.COLUMN_Asetukset_ID, DBAlustus.COLUMN_Asetukset_nimi, DBAlustus.COLUMN_Asetukset_versio, DBAlustus.COLUMN_Asetukset_db_versio, DBAlustus.COLUMN_Asetukset_vuoronvaihto, DBAlustus.COLUMN_Asetukset_pelijarjestys, DBAlustus.COLUMN_Asetukset_kieli, DBAlustus.COLUMN_Asetukset_metric, DBAlustus.COLUMN_Asetukset_raportinmuoto, DBAlustus.COLUMN_Asetukset_useGPS }, DBAlustus.COLUMN_Asetukset_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
  
-        Asetukset asetukset = new Asetukset(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)));
+        Asetukset asetukset = new Asetukset(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)));
         return asetukset;
     }
     
@@ -75,6 +77,7 @@ public class DBAsetukset {
 		values.put(DBAlustus.COLUMN_Asetukset_vuoronvaihto, asetukset.getVuoronvaihto());
 		values.put(DBAlustus.COLUMN_Asetukset_pelijarjestys, asetukset.getPelijarjestys());
 		values.put(DBAlustus.COLUMN_Asetukset_kieli, asetukset.getKieli());
+		values.put(DBAlustus.COLUMN_Asetukset_metric, asetukset.getMetric());
 		values.put(DBAlustus.COLUMN_Asetukset_raportinmuoto, asetukset.getRaportinmuoto());
 		values.put(DBAlustus.COLUMN_Asetukset_useGPS, asetukset.getUseGPS());
 	 
@@ -105,8 +108,9 @@ public class DBAsetukset {
             	asetukset.setVuoronvaihto(Integer.parseInt(cursor.getString(4)));
             	asetukset.setPelijarjestys(Integer.parseInt(cursor.getString(5)));
             	asetukset.setKieli(Integer.parseInt(cursor.getString(6)));
-            	asetukset.setRaportinmuoto(Integer.parseInt(cursor.getString(7)));
-            	asetukset.setUseGPS(Integer.parseInt(cursor.getString(8)));
+            	asetukset.setMetric(Integer.parseInt(cursor.getString(7)));
+            	asetukset.setRaportinmuoto(Integer.parseInt(cursor.getString(8)));
+            	asetukset.setUseGPS(Integer.parseInt(cursor.getString(9)));
                 // Adding contact to list
             	listAsetukset.add(asetukset);
             } while (cursor.moveToNext());

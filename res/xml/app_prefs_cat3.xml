@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="app_prefs_cat3"
+        android:title="@string/settings_title_cat3" >
+        <ListPreference
+            android:defaultValue="English"
+            android:entries="@array/arrayDatasource"
+            android:entryValues="@array/arrayDatasourceValues"
+            android:key="lstDatasource"
+            android:summary="@string/settings_report"
+            android:title="@string/settings_caption_htmlsource" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
