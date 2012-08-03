@@ -48,7 +48,7 @@ public class DBKaupungit {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Kaupungit kaupungit = new Kaupungit(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+        Kaupungit kaupungit = new Kaupungit(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
         return kaupungit;
     }
     
@@ -79,7 +79,7 @@ public class DBKaupungit {
         if (cursor.moveToFirst()) {
             do {
             	Kaupungit kaupungit = new Kaupungit();
-            	kaupungit.setId(Integer.parseInt(cursor.getString(0)));
+            	kaupungit.setId(cursor.getInt(0));
             	kaupungit.setNimi(cursor.getString(1));
             	kaupungit.setPaivityspvm(cursor.getString(2));
                 // Adding contact to list

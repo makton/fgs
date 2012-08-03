@@ -7,16 +7,15 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 
 public class ApplicationController extends Application {
 	//Application wide instance variables
 	private static ApplicationController singleton = null;
 	private Context appContext;
 	
-	public Asetukset asetukset;
-    public SQLiteDatabase database;
-    public DBAvaus dbAvaus;
-    public DBAsetukset dbAsetukset;  
+	private SQLiteDatabase database;
+	private DBAvaus dbAvaus;  
     
     //Yleiset muuttujat
     //public int[] aktiivisetPelaajat;
@@ -32,7 +31,11 @@ public class ApplicationController extends Application {
 		singleton = this;
 	    appContext = this.getApplicationContext();
 	    
+	    //avataan kantayhteys
 		openDB();
+		
+		//mŠŠritellŠŠn asetukset
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(singleton);
 	}
 	
 	public ApplicationController getInstance() {
@@ -61,10 +64,6 @@ public class ApplicationController extends Application {
 
 	public SQLiteDatabase getDBInstance() {
 		return database;
-	}
-	
-	public void setDBInstance(SQLiteDatabase database) {
-		this.database = database;
 	}
 	
 	public boolean getDBstatus() {

@@ -63,7 +63,7 @@ public class DBAsetukset {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Asetukset asetukset = new Asetukset(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)));
+        Asetukset asetukset = new Asetukset(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(0)>0, cursor.getInt(5)>0, cursor.getInt(6), cursor.getInt(7)>0, cursor.getInt(8), cursor.getInt(9)>0);
         return asetukset;
     }
     
@@ -101,16 +101,16 @@ public class DBAsetukset {
         if (cursor.moveToFirst()) {
             do {
             	Asetukset asetukset = new Asetukset();
-            	asetukset.setId(Integer.parseInt(cursor.getString(0)));
+            	asetukset.setId(cursor.getInt(0));
             	asetukset.setNimi(cursor.getString(1));
             	asetukset.setVersio(cursor.getString(2));
-            	asetukset.setDb_versio(Integer.parseInt(cursor.getString(3)));
-            	asetukset.setVuoronvaihto(Integer.parseInt(cursor.getString(4)));
-            	asetukset.setPelijarjestys(Integer.parseInt(cursor.getString(5)));
-            	asetukset.setKieli(Integer.parseInt(cursor.getString(6)));
-            	asetukset.setMetric(Integer.parseInt(cursor.getString(7)));
-            	asetukset.setRaportinmuoto(Integer.parseInt(cursor.getString(8)));
-            	asetukset.setUseGPS(Integer.parseInt(cursor.getString(9)));
+            	asetukset.setDb_versio(cursor.getInt(3));
+            	asetukset.setVuoronvaihto(cursor.getInt(4)>0);
+            	asetukset.setPelijarjestys(cursor.getInt(5)>0);
+            	asetukset.setKieli(cursor.getInt(6));
+            	asetukset.setMetric(cursor.getInt(7)>0);
+            	asetukset.setRaportinmuoto(cursor.getInt(8));
+            	asetukset.setUseGPS(cursor.getInt(9)>0);
                 // Adding contact to list
             	listAsetukset.add(asetukset);
             } while (cursor.moveToNext());

@@ -73,7 +73,7 @@ public class DBRadat {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Radat radat = new Radat(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), Integer.parseInt(cursor.getString(7)), Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)), cursor.getString(10), cursor.getString(11), cursor.getString(12));
+        Radat radat = new Radat(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getString(10), cursor.getString(11), cursor.getString(12));
         return radat;
     }
     
@@ -117,16 +117,16 @@ public class DBRadat {
         if (cursor.moveToFirst()) {
             do {
             	Radat radat = new Radat();
-            	radat.setId(Integer.parseInt(cursor.getString(0)));
-            	radat.setKaupunki_id(Integer.parseInt(cursor.getString(1)));
+            	radat.setId(cursor.getInt(0));
+            	radat.setKaupunki_id(cursor.getInt(1));
             	radat.setNimi(cursor.getString(2));
             	radat.setInfo(cursor.getString(3));
             	radat.setLuokitus(cursor.getString(4));
             	radat.setOsoite(cursor.getString(5));
             	radat.setSijainti(cursor.getString(6));
-            	radat.setMaksullinen(Integer.parseInt(cursor.getString(7)));
-            	radat.setVaylia(Integer.parseInt(cursor.getString(8)));
-            	radat.setPar(Integer.parseInt(cursor.getString(9)));
+            	radat.setMaksullinen(cursor.getInt(7));
+            	radat.setVaylia(cursor.getInt(8));
+            	radat.setPar(cursor.getInt(9));
             	radat.setKartta(cursor.getString(10));
             	radat.setKuvaus(cursor.getString(11));
             	radat.setPaivityspvm(cursor.getString(12));

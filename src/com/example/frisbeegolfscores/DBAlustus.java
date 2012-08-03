@@ -8,7 +8,7 @@ import android.util.Log;
 public class DBAlustus extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "frisbeegolfscores.db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 
 	// taulut
 	public static final String TABLE_Asetukset = "asetukset";
@@ -131,8 +131,8 @@ public class DBAlustus extends SQLiteOpenHelper {
 			+ "'0.0.1',"
 			+ DATABASE_VERSION + ","
 			+ "1,"
-			+ "0,"
-			+ "0,"
+			+ "1,"
+			+ "1," // kieli
 			+ "1,"
 			+ "0,"
 			+ "0"

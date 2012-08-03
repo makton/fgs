@@ -62,7 +62,7 @@ public class DBTulokset{
         if (cursor != null)
             cursor.moveToFirst();
  
-        Tulokset tulokset = new Tulokset(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), Integer.parseInt(cursor.getString(5)), cursor.getString(6), cursor.getString(7));
+        Tulokset tulokset = new Tulokset(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6), cursor.getString(7));
         return tulokset;
     }
     
@@ -100,12 +100,12 @@ public class DBTulokset{
         if (cursor.moveToFirst()) {
             do {
             	Tulokset tulokset = new Tulokset();
-            	tulokset.setId(Integer.parseInt(cursor.getString(0)));
-            	tulokset.setPelaaja_id(Integer.parseInt(cursor.getString(1)));
-            	tulokset.setRata_id(Integer.parseInt(cursor.getString(2)));
-            	tulokset.setVayla_id(Integer.parseInt(cursor.getString(3)));
-            	tulokset.setKierros_id(Integer.parseInt(cursor.getString(4)));
-            	tulokset.setTulos(Integer.parseInt(cursor.getString(5)));
+            	tulokset.setId(cursor.getInt(0));
+            	tulokset.setPelaaja_id(cursor.getInt(1));
+            	tulokset.setRata_id(cursor.getInt(2));
+            	tulokset.setVayla_id(cursor.getInt(3));
+            	tulokset.setKierros_id(cursor.getInt(4));
+            	tulokset.setTulos(cursor.getInt(5));
             	tulokset.setPvm(cursor.getString(6));
             	tulokset.setKesto(cursor.getString(7));
                 // Adding contact to list

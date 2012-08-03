@@ -52,7 +52,7 @@ public class DBGpsdata {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Gpsdata gpsdata = new Gpsdata(Long.parseLong(cursor.getString(0)), cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)), cursor.getString(4));
+        Gpsdata gpsdata = new Gpsdata(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
         return gpsdata;
     }
     
@@ -93,10 +93,10 @@ public class DBGpsdata {
         if (cursor.moveToFirst()) {
             do {
             	Gpsdata gpsdata = new Gpsdata();
-            	gpsdata.setId(Long.parseLong(cursor.getString(0)));
+            	gpsdata.setId(cursor.getLong(0));
             	gpsdata.setX(cursor.getString(1));
             	gpsdata.setY(cursor.getString(2));
-            	gpsdata.setTulokset_id(Integer.parseInt(cursor.getString(0)));
+            	gpsdata.setTulokset_id(cursor.getInt(0));
             	gpsdata.setPvm(cursor.getString(4));
                 // Adding contact to list
             	listGpsdata.add(gpsdata);

@@ -5,9 +5,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -102,5 +104,20 @@ public class Sekalaiset {
         Date date = new Date();
         String now = formatter.format(date);
         return now;
+	}
+	
+	public static void updateLanguage(Context context, SharedPreferences prefs) {
+		String lang = prefs.getString("settings_language", "");
+		if (lang.equals(""))
+			lang = "us";
+		updateLanguage(context, lang);
+	}
+
+	public static void updateLanguage(Context context, String lang) {
+		Locale locale = new Locale(lang);
+		Locale.setDefault(locale);
+		android.content.res.Configuration config = new android.content.res.Configuration();
+		config.locale = locale;
+		context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
 	}
 }

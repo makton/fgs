@@ -5,21 +5,15 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class ActivityAsetukset extends PreferenceActivity {
 	
@@ -28,20 +22,28 @@ public class ActivityAsetukset extends PreferenceActivity {
 	
 	private Kielisyys kielisyys = new Kielisyys();
 	private SQLiteDatabase database;
-	private DBAvaus dbAvaus;// = new DBAvaus(this);
 	private DBAsetukset dbAsetukset;// = new DBAsetukset(this);
     private Asetukset asetukset;
-	public Context appContext;
-	public Context actContext;
-	public Context sqlContext;
+    private Context appContext;
+	private Context actContext;
+	private Context sqlContext;
+	private Context mContext;
+	private ApplicationController mApplication;
+	private SharedPreferences sharedPrefs;
+	private SharedPreferences.Editor sharedPrefsEditor;
 	
 	//asetukset
 	public int muutoksia = 0;
 	public int kieli = 0;
-	public int gps = 0;
-	public int vuoro = 0;
-	public int jarjestys = 0;
+	public boolean metric = false;
+	public boolean usegps = false;
+	public boolean vuoro = false;
+	public boolean jarjestys = false;
 	public int raportti = 0;
+	
+	//näytön objektit
+	ListPreference settings_languages;
+	
 	/*
 	String[] spinnerKieliValues = new String[]{};
 	
@@ -69,24 +71,23 @@ public class ActivityAsetukset extends PreferenceActivity {
 			mLoadHeaders = getClass().getMethod("loadHeadersFromResource",int.class, List.class);
 			mHasHeaders = getClass().getMethod("hasHeaders");
 		} catch (NoSuchMethodException e) {
-		}
+		} 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_asetukset);
+		//setContentView(R.layout.activity_asetukset);
 		if (!isNewV11Prefs()) {
-			addPreferencesFromResource(R.xml.app_prefs_cat1);
-			addPreferencesFromResource(R.xml.app_prefs_cat2);
-			addPreferencesFromResource(R.xml.app_prefs_cat3);
+			addPreferencesFromResource(R.xml.app_prefs);
+//			addPreferencesFromResource(R.xml.app_prefs_cat1);
+//			addPreferencesFromResource(R.xml.app_prefs_cat2);
+//			addPreferencesFromResource(R.xml.app_prefs_cat3);
 		}
-		// addPreferencesFromResource(R.xml.preferences);
 
-		// application controller
-		ApplicationController mApplication = (ApplicationController) getApplicationContext();
-		// String username = mApplication.getUsername();
-		// String password = mApplication.getPassword();
-
+        //application controller
+        mApplication = ((ApplicationController)getApplicationContext());
+        mContext = mApplication.getInstance();
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        sharedPrefsEditor = sharedPrefs.edit();
 	}
-    
-    
+
     @Override
     protected void onStart() {
     	// The activity is about to become visible.
@@ -112,29 +113,25 @@ public class ActivityAsetukset extends PreferenceActivity {
         txtOtsikkoRaportti = (TextView) findViewById(R.id.txtOtsikkoRaportti);
         chktxtRaportti = (CheckedTextView) findViewById(R.id.chktxtRaportti);
         */
-        
-        //luetaan asetukset
-        dbAvaus = new DBAvaus(sqlContext);
-    	dbAsetukset = new DBAsetukset(sqlContext);
-        
-    	if (!dbAvaus.status()){
-	        database = dbAvaus.open();
-	        dbAsetukset.setDBInstance(database);
-        }
-      
+
+        database = mApplication.getInstance().getDBInstance();
+        dbAsetukset = new DBAsetukset(mContext);
+	    dbAsetukset.setDBInstance(database);
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
-    	gps = asetukset.getUseGPS();
+    	usegps = asetukset.getUseGPS();
     	vuoro = asetukset.getVuoronvaihto();
     	jarjestys = asetukset.getPelijarjestys();
     	raportti = asetukset.getRaportinmuoto();
 
+    	//settings_languages;
+    	
         // Reading all asetukset
         Log.d("FrisbeeGolfScores: ", "Haetaan kaikki asetukset..");
         List<Asetukset> Listasetukset = dbAsetukset.haeAsetukset();
 
         for (Asetukset cn : Listasetukset) {
-            String log = "Id: "+cn.getId()+" ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys();
+            String log = "Id: "+cn.getId()+" ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys() + " ,Metric: " + cn.getMetric() + " ,Vuoro: " + cn.getVuoronvaihto();
                 // Writing Contacts to log
             Log.d("Asetukset (settings) : ", log);
         }
@@ -276,20 +273,13 @@ public class ActivityAsetukset extends PreferenceActivity {
         super.onStop();
         
         //tallennetaan asetukset
-        if (muutoksia == 1) {
-            asetukset.setKieli(kieli);
-        	asetukset.setUseGPS(gps);
-        	asetukset.setVuoronvaihto(vuoro);
-        	asetukset.setPelijarjestys(jarjestys);
-        	asetukset.setRaportinmuoto(raportti);
-        	dbAsetukset.updateAsetukset(asetukset);
-        }
-        
-        //suljetaan kanta
-        if (dbAvaus.status()){
-        	dbAvaus.close();
-        }
-
+        asetukset.setKieli(Integer.parseInt(sharedPrefs.getString("settings_language",String.valueOf(kieli))));
+       	asetukset.setMetric(sharedPrefs.getBoolean("settings_metric",metric));
+       	asetukset.setUseGPS(sharedPrefs.getBoolean("settings_usegps",usegps));
+       	asetukset.setVuoronvaihto(sharedPrefs.getBoolean("settings_vuoro",vuoro));
+       	asetukset.setPelijarjestys(sharedPrefs.getBoolean("settings_jarjestys",jarjestys));
+       	asetukset.setRaportinmuoto(Integer.parseInt(sharedPrefs.getString("settings_report",String.valueOf(raportti))));
+       	dbAsetukset.updateAsetukset(asetukset);
     }
 /*    
     @Override
@@ -318,7 +308,8 @@ public class ActivityAsetukset extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> aTarget) {
         try {
-            mLoadHeaders.invoke(this,new Object[]{R.xml.pref_headers,aTarget});
+            //mLoadHeaders.invoke(this,new Object[]{R.xml.pref_headers,aTarget});
+            mLoadHeaders.invoke(this,new Object[]{R.xml.app_prefs,aTarget});
         } catch (IllegalArgumentException e) {
         } catch (IllegalAccessException e) {
         } catch (InvocationTargetException e) {

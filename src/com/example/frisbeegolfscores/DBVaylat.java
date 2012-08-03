@@ -60,7 +60,7 @@ public class DBVaylat {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Vaylat vaylat = new Vaylat(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), cursor.getString(5), cursor.getString(6));
+        Vaylat vaylat = new Vaylat(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6));
         return vaylat;
     }
     
@@ -98,11 +98,11 @@ public class DBVaylat {
         if (cursor.moveToFirst()) {
             do {
             	Vaylat vaylat = new Vaylat();
-            	vaylat.setId(Integer.parseInt(cursor.getString(0)));
-            	vaylat.setRata_id(Integer.parseInt(cursor.getString(1)));
-            	vaylat.setJarjestys(Integer.parseInt(cursor.getString(2)));
-            	vaylat.setPituus(Integer.parseInt(cursor.getString(3)));
-            	vaylat.setPar(Integer.parseInt(cursor.getString(4)));
+            	vaylat.setId(cursor.getInt(0));
+            	vaylat.setRata_id(cursor.getInt(1));
+            	vaylat.setJarjestys(cursor.getInt(2));
+            	vaylat.setPituus(cursor.getInt(3));
+            	vaylat.setPar(cursor.getInt(4));
             	vaylat.setKuvaus(cursor.getString(5));
             	vaylat.setPaivityspvm(cursor.getString(6));
                 // Adding contact to list

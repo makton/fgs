@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string-array name="arrayLanguages">
-        <item>@string/language_english</item>
-        <item>@string/language_finnish</item>
-        <item>@string/language_swedish</item>
+        <item name="language_english">@string/language_english</item>
+        <item name="language_finnish">@string/language_finnish</item>
+        <item name="language_swedish">@string/language_swedish</item>
     </string-array>
     <string-array name="arrayLanguagesValues">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
     </string-array>
     
     <string-array name="arrayDatasource">
-        <item>html</item>
-        <item>txt</item>
-        <item>pdf</item>
+        <item name="txt">txt</item>
+        <item name="html">html</item>
+        <item name="pdf">pdf</item>
     </string-array>
     <string-array name="arrayDatasourceValues">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
     </string-array>
 
 </resources>

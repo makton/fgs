@@ -64,7 +64,7 @@ public class DBPelaajat {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Pelaajat pelaajat = new Pelaajat(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), Integer.parseInt(cursor.getString(6)), cursor.getString(7), cursor.getString(8));
+        Pelaajat pelaajat = new Pelaajat(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6), cursor.getString(7), cursor.getString(8));
         return pelaajat;
     }
     
@@ -104,13 +104,13 @@ public class DBPelaajat {
         if (cursor.moveToFirst()) {
             do {
             	Pelaajat pelaajat = new Pelaajat();
-            	pelaajat.setId(Integer.parseInt(cursor.getString(0)));
+            	pelaajat.setId(cursor.getInt(0));
             	pelaajat.setNimi(cursor.getString(1));
             	pelaajat.setNayttonimi(cursor.getString(2));
             	pelaajat.setInfo(cursor.getString(3));
             	pelaajat.setKayttajatunnus(cursor.getString(4));
             	pelaajat.setSalasana(cursor.getString(5));
-            	pelaajat.setJoukkue(Integer.parseInt(cursor.getString(6)));
+            	pelaajat.setJoukkue(cursor.getInt(6));
             	pelaajat.setLuontipvm(cursor.getString(7));
             	pelaajat.setPaivityspvm(cursor.getString(8));
                 // Adding contact to list

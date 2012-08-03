@@ -8,12 +8,12 @@ public class Asetukset {
 	private String versio;
 	private int db_versio;
 	// yleiset asetukset
-	private int vuoronvaihto; // miten vaihdetaan vuoro, automaattisesti, manuaalisesti, tms
-	private int pelijarjestys; // miten määritellään pelijärjestys? random, handicap, tms
+	private boolean vuoronvaihto; // miten vaihdetaan vuoro, automaattisesti, manuaalisesti, tms
+	private boolean pelijarjestys; // miten määritellään pelijärjestys? random, handicap, tms
 	private int kieli; // ohjelman kieli
-	private int metric; // ohjelman kieli
+	private boolean metric; // ohjelman käyttämä merijärjestelmä
 	private int raportinmuoto; // html, csv, tms
-	private int useGPS; // GPS käytössä?
+	private boolean useGPS; // GPS käytössä?
 	
 	public Asetukset() {
 	}
@@ -25,7 +25,7 @@ public class Asetukset {
 	}
 	
 	public Asetukset(String nimi, String versio, int db_versio,
-			int vuoronvaihto, int pelijarjestys, int kieli, int metric, int raportinmuoto, int useGPS) {
+			boolean vuoronvaihto, boolean pelijarjestys, int kieli, boolean metric, int raportinmuoto, boolean useGPS) {
 		this.nimi = nimi;
 		this.versio = versio;
 		this.db_versio = db_versio;
@@ -38,7 +38,7 @@ public class Asetukset {
 	}
 
 	public Asetukset(int id, String nimi, String versio, int db_versio,
-			int vuoronvaihto, int pelijarjestys, int kieli, int metric, int raportinmuoto, int useGPS) {
+			boolean vuoronvaihto, boolean pelijarjestys, int kieli, boolean metric, int raportinmuoto, boolean useGPS) {
 		this.id = id;
 		this.nimi = nimi;
 		this.versio = versio;
@@ -83,19 +83,19 @@ public class Asetukset {
 		this.db_versio = db_versio;
 	}
 
-	public int getVuoronvaihto() {
+	public boolean getVuoronvaihto() {
 		return vuoronvaihto;
 	}
 
-	public void setVuoronvaihto(int vuoronvaihto) {
+	public void setVuoronvaihto(boolean vuoronvaihto) {
 		this.vuoronvaihto = vuoronvaihto;
 	}
 
-	public int getPelijarjestys() {
+	public boolean getPelijarjestys() {
 		return pelijarjestys;
 	}
 
-	public void setPelijarjestys(int pelijarjestys) {
+	public void setPelijarjestys(boolean pelijarjestys) {
 		this.pelijarjestys = pelijarjestys;
 	}
 
@@ -107,11 +107,11 @@ public class Asetukset {
 		this.kieli = kieli;
 	}
 
-	public int getMetric() {
+	public boolean getMetric() {
 		return metric;
 	}
 
-	public void setMetric(int metric) {
+	public void setMetric(boolean metric) {
 		this.metric = metric;
 	}
 
@@ -123,11 +123,11 @@ public class Asetukset {
 		this.raportinmuoto = raportinmuoto;
 	}
 
-	public int getUseGPS() {
+	public boolean getUseGPS() {
 		return useGPS;
 	}
 	
-	public void setUseGPS(int useGPS) {
+	public void setUseGPS(boolean useGPS) {
 		this.useGPS = useGPS;
 	}
 

@@ -46,7 +46,7 @@ public class DBJoukkueet {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Joukkueet joukkueet = new Joukkueet(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+        Joukkueet joukkueet = new Joukkueet(cursor.getInt(0), cursor.getString(1));
         return joukkueet;
     }
     
@@ -76,7 +76,7 @@ public class DBJoukkueet {
         if (cursor.moveToFirst()) {
             do {
             	Joukkueet joukkueet = new Joukkueet();
-            	joukkueet.setId(Integer.parseInt(cursor.getString(0)));
+            	joukkueet.setId(cursor.getInt(0));
             	joukkueet.setNimi(cursor.getString(1));
                 // Adding contact to list
             	listJoukkueet.add(joukkueet);

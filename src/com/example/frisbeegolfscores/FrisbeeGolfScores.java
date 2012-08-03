@@ -6,6 +6,7 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.R.drawable;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.Button;
 
 import com.google.android.maps.GeoPoint;
@@ -38,8 +40,11 @@ public class FrisbeeGolfScores extends Activity {
 	
     private Asetukset asetukset;
     private SQLiteDatabase database;
-	private DBAvaus dbAvaus;// = new DBAvaus(this);
-    private DBAsetukset dbAsetukset;// = new DBAsetukset(this);        
+	//private DBAvaus dbAvaus;// = new DBAvaus(this);
+    private DBAsetukset dbAsetukset;// = new DBAsetukset(this);
+    
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor sharedPrefsEditor;
 	
 	//näytön objektit
 	private Button btnAsetukset;
@@ -50,6 +55,11 @@ public class FrisbeeGolfScores extends Activity {
 	
 	//asetukset
 	public int kieli = 0;
+	public boolean metric = false;
+	public boolean usegps = false;
+	public boolean vuoro = false;
+	public boolean jarjestys = false;
+	public int raportti = 0;
 	
 	//staattiset muuttujat
     public static final int DIALOG_GPS_DISABLED = 0;
@@ -58,7 +68,7 @@ public class FrisbeeGolfScores extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frisbee_golf_scores);
-        
+
         Log.d("FrisbeeGolfScores: ", "Ohjelma alkaa..");
         Log.d("onCreate: ", String.valueOf(1));
 
@@ -68,7 +78,7 @@ public class FrisbeeGolfScores extends Activity {
         btnAsetukset = (Button) findViewById(R.id.btnAsetukset);
         btnPelaajat = (Button) findViewById(R.id.btnPelaajat);
         btnTiimit = (Button) findViewById(R.id.btnTiimit);
-        
+
         //määritellään context
         actContext = this;
         appContext = this.getApplicationContext();
@@ -78,7 +88,10 @@ public class FrisbeeGolfScores extends Activity {
 
         //application controller
         mApplication = ((ApplicationController)getApplicationContext());
-
+        mContext = mApplication.getInstance();
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        sharedPrefsEditor = sharedPrefs.edit();
+        
         /*
         dbAsetukset.addAsetus(new Asetukset("Frisbee Golf Scores","0.0.1",2));
         dbPelaajat.addPelaaja(new Pelaajat("Ravi3"));
@@ -93,20 +106,30 @@ public class FrisbeeGolfScores extends Activity {
         
         Log.d("onStart ",String.valueOf(1));
         
-        mContext = mApplication.getInstance();
         database = mApplication.getInstance().getDBInstance();
         dbAsetukset = new DBAsetukset(mContext);
 	    dbAsetukset.setDBInstance(database);
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
+        metric = asetukset.getMetric();
+    	usegps = asetukset.getUseGPS();
+    	vuoro = asetukset.getVuoronvaihto();
+    	jarjestys = asetukset.getPelijarjestys();
+    	raportti = asetukset.getRaportinmuoto();
+    	sharedPrefsEditor.putString("settings_language",String.valueOf(kieli));
+    	sharedPrefsEditor.putBoolean("settings_metric",metric);
+    	sharedPrefsEditor.putBoolean("settings_usegps",usegps);
+    	sharedPrefsEditor.putBoolean("settings_vuoro",vuoro);
+    	sharedPrefsEditor.putBoolean("settings_jarjestys",jarjestys);
+    	sharedPrefsEditor.putString("settings_report",String.valueOf(raportti));
+    	sharedPrefsEditor.commit();
         
         // Reading all asetukset
         Log.d("FrisbeeGolfScores: ", "Haetaan kaikki asetukset..");
         List<Asetukset> Listasetukset = dbAsetukset.haeAsetukset();
 
         for (Asetukset cn : Listasetukset) {
-            String log = "Id: "+cn.getId()+" ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys();
-                // Writing Contacts to log
+            String log = "Id: " + cn.getId() + " ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys() + " ,Metric: " + cn.getMetric() + " ,Vuoro: " + cn.getVuoronvaihto() + " ,DB: " + cn.getDb_versio();
             Log.d("Asetukset (main) : ", log);
         }
         
@@ -157,9 +180,6 @@ public class FrisbeeGolfScores extends Activity {
         if (gpsStatus == true) {
         	gps.disableMyLocation();
         }
-        if (dbAvaus.status()){
-        	//dbAvaus.close();
-        }
     }
 
     @Override
@@ -170,8 +190,8 @@ public class FrisbeeGolfScores extends Activity {
         if (gpsStatus == true) {
         	gps.disableMyLocation();
         }
-        if (dbAvaus.status()){
-        	dbAvaus.close();
+        if (mApplication.getInstance().getDBstatus()){
+        	mApplication.getInstance().closeDB();
         }
     }
     /*

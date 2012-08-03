@@ -33,6 +33,7 @@
             android:name="com.example.frisbeegolfscores.ActivityAsetukset"
             android:label="@string/settings_taskbar_caption" >
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>

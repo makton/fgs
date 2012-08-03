@@ -48,7 +48,7 @@ public class DBKierros {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Kierros kierros = new Kierros(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), cursor.getString(2));
+        Kierros kierros = new Kierros(cursor.getInt(0), cursor.getInt(1), cursor.getString(2));
         return kierros;
     }
     
@@ -79,8 +79,8 @@ public class DBKierros {
         if (cursor.moveToFirst()) {
             do {
             	Kierros kierros = new Kierros();
-            	kierros.setId(Integer.parseInt(cursor.getString(0)));
-            	kierros.setRata_id(Integer.parseInt(cursor.getString(1)));
+            	kierros.setId(cursor.getInt(0));
+            	kierros.setRata_id(cursor.getInt(1));
             	kierros.setPvm(cursor.getString(2));
                 // Adding contact to list
             	listKierros.add(kierros);

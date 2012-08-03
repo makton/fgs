@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="app_prefs_cat1"
+        android:title="@string/settings_title_cat1" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/arrayLanguages"
+            android:entryValues="@array/arrayLanguagesValues"
+            android:key="settings_languages"
+            android:summary="@string/settings_language"
+            android:title="@string/settings_caption_language" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="settings_metric"
+            android:summary="@string/settings_metric"
+            android:title="@string/settings_caption_metric" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="app_prefs_cat2"
+        android:title="@string/settings_title_cat2" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="settings_usegps"
+            android:summary="@string/settings_location"
+            android:title="@string/settings_caption_location" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="settings_vuoro"
+            android:summary="@string/settings_advance"
+            android:title="@string/settings_caption_advance" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="settings_jarjestys"
+            android:summary="@string/settings_order"
+            android:title="@string/settings_caption_order" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="app_prefs_cat3"
+        android:title="@string/settings_title_cat3" >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/arrayDatasource"
+            android:entryValues="@array/arrayDatasourceValues"
+            android:key="settings_report"
+            android:summary="@string/settings_report"
+            android:title="@string/settings_caption_htmlsource" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
