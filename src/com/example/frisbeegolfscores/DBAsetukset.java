@@ -66,7 +66,7 @@ public class DBAsetukset {
         Asetukset asetukset = new Asetukset(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(0)>0, cursor.getInt(5)>0, cursor.getInt(6), cursor.getInt(7)>0, cursor.getInt(8), cursor.getInt(9)>0);
         return asetukset;
     }
-    
+
     // Updating single
 	public int updateAsetukset(Asetukset asetukset) {
 	    ContentValues values = new ContentValues();	 

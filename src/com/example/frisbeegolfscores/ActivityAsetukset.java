@@ -76,9 +76,6 @@ public class ActivityAsetukset extends PreferenceActivity {
 		//setContentView(R.layout.activity_asetukset);
 		if (!isNewV11Prefs()) {
 			addPreferencesFromResource(R.xml.app_prefs);
-//			addPreferencesFromResource(R.xml.app_prefs_cat1);
-//			addPreferencesFromResource(R.xml.app_prefs_cat2);
-//			addPreferencesFromResource(R.xml.app_prefs_cat3);
 		}
 
         //application controller
@@ -119,6 +116,7 @@ public class ActivityAsetukset extends PreferenceActivity {
 	    dbAsetukset.setDBInstance(database);
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
+        metric = asetukset.getMetric();
     	usegps = asetukset.getUseGPS();
     	vuoro = asetukset.getVuoronvaihto();
     	jarjestys = asetukset.getPelijarjestys();
@@ -279,7 +277,9 @@ public class ActivityAsetukset extends PreferenceActivity {
        	asetukset.setVuoronvaihto(sharedPrefs.getBoolean("settings_vuoro",vuoro));
        	asetukset.setPelijarjestys(sharedPrefs.getBoolean("settings_jarjestys",jarjestys));
        	asetukset.setRaportinmuoto(Integer.parseInt(sharedPrefs.getString("settings_report",String.valueOf(raportti))));
-       	dbAsetukset.updateAsetukset(asetukset);
+       	int result = dbAsetukset.updateAsetukset(asetukset);
+       	Log.d("update result: ", String.valueOf(result));
+       	
     }
 /*    
     @Override
