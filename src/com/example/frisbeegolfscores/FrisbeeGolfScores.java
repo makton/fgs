@@ -31,17 +31,14 @@ public class FrisbeeGolfScores extends Activity {
 	private boolean gpsStatus = false;
 	private Handler handler;
 	private Boolean connectionStatus = false; // network status?
-	public Context appContext;
-	public Context actContext;
-	public Context sqlContext;
-	public Context mContext;
-	
-	public ApplicationController  mApplication;
+	private Context appContext;
+	private Context actContext;
 	
     private Asetukset asetukset;
     private SQLiteDatabase database;
-	//private DBAvaus dbAvaus;// = new DBAvaus(this);
-    private DBAsetukset dbAsetukset;// = new DBAsetukset(this);
+    private DBAsetukset dbAsetukset;
+    
+	private ApplicationController  mApplication;
     
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor sharedPrefsEditor;
@@ -54,12 +51,12 @@ public class FrisbeeGolfScores extends Activity {
 	private TextView textView;
 	
 	//asetukset
-	public int kieli = 0;
-	public boolean metric = false;
-	public boolean usegps = false;
-	public boolean vuoro = false;
-	public boolean jarjestys = false;
-	public int raportti = 0;
+	private int kieli = 0;
+	private boolean metric = false;
+	private boolean usegps = false;
+	private boolean vuoro = false;
+	private boolean jarjestys = false;
+	private int raportti = 0;
 	
 	//staattiset muuttujat
     public static final int DIALOG_GPS_DISABLED = 0;
@@ -81,33 +78,20 @@ public class FrisbeeGolfScores extends Activity {
 
         //mŠŠritellŠŠn context
         actContext = this;
-        appContext = this.getApplicationContext();
-        sqlContext = this.getApplication();
+        //appContext = this.getApplicationContext();
+        //sqlContext = this.getApplication();
 
         handler = new Handler();
 
         //application controller
         mApplication = ((ApplicationController)getApplicationContext());
-        mContext = mApplication.getInstance();
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        appContext = mApplication.getInstance();
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         sharedPrefsEditor = sharedPrefs.edit();
-        
-        /*
-        dbAsetukset.addAsetus(new Asetukset("Frisbee Golf Scores","0.0.1",2));
-        dbPelaajat.addPelaaja(new Pelaajat("Ravi3"));
-        dbKierros.addKierros(new Kierros(1,"15.7.2012 16:24"));
-        */
-    }
 
-    @Override
-    protected void onStart() {
-    	// The activity is about to become visible.
-        super.onStart();
-        
-        Log.d("onStart ",String.valueOf(1));
-        
+        //luetaan asetukset
         database = mApplication.getInstance().getDBInstance();
-        dbAsetukset = new DBAsetukset(mContext);
+        dbAsetukset = new DBAsetukset(appContext);
 	    dbAsetukset.setDBInstance(database);
         asetukset = dbAsetukset.getAsetus(1);
         kieli = asetukset.getKieli();
@@ -123,6 +107,14 @@ public class FrisbeeGolfScores extends Activity {
     	sharedPrefsEditor.putBoolean("settings_jarjestys",jarjestys);
     	sharedPrefsEditor.putString("settings_report",String.valueOf(raportti));
     	sharedPrefsEditor.commit();
+}
+
+    @Override
+    protected void onStart() {
+    	// The activity is about to become visible.
+        super.onStart();
+        
+        Log.d("onStart ",String.valueOf(1));
         
         // Reading all asetukset
         Log.d("FrisbeeGolfScores: ", "Haetaan kaikki asetukset..");
@@ -356,35 +348,4 @@ public class FrisbeeGolfScores extends Activity {
 		httpget.execute(new String[] { "http://www.google.fi" });
 
 	}
-	
-        /*
-        DBPelaajat dbPelaajat = new DBPelaajat(this);
-        DBJoukkueet dbJoukkueet = new DBJoukkueet(this);
-        DBKaupungit dbKaupungit = new DBKaupungit(this);
-        DBRadat dbRadat = new DBRadat(this);
-        DBVaylat dbVaylat = new DBVaylat(this);
-        DBKierros dbKierros = new DBKierros(this);
-        
-
-        dbPelaajat.setDBInstance(database);
-        dbJoukkueet.setDBInstance(database);
-        dbKaupungit.setDBInstance(database);
-        dbRadat.setDBInstance(database);
-        dbVaylat.setDBInstance(database);
-        dbKierros.setDBInstance(database);
-        
-        dbAsetukset.addAsetus(new Asetukset("Frisbee Golf Scores","0.0.1",2));
-        dbPelaajat.addPelaaja(new Pelaajat("Ravi3"));
-        dbKierros.addKierros(new Kierros(1,"15.7.2012 16:24"));
-        
-        // Reading all contacts
-        Log.d("FrisbeeGolfScores: ", "Haetaan kaikki pelaajat..");
-        List<Pelaajat> pelaajat = dbPelaajat.haePelaajat();
-
-        for (Pelaajat cn : pelaajat) {
-            String log = "Id: "+cn.getId()+" ,Nimi: " + cn.getNimi();// + " ,Phone: " + cn.getPhoneNumber();
-                // Writing Contacts to log
-            Log.d("Nimi: ", log);
-        }
-        */
 }

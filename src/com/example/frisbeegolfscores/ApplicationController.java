@@ -73,64 +73,7 @@ public class ApplicationController extends Application {
 		}
 		return database.isOpen();
 	}
-/*	
-	public DBAsetukset openDBAsetukset() {
-		if (dbAvaus.status()) {
-			DBAsetukset dbAsetukset = new DBAsetukset(appContext);
-			dbAsetukset = new DBAsetukset(appContext);
-			dbAsetukset.setDBInstance(database);
-		}
-		return dbAsetukset;
-	}
 
-	public void openDBPelaajat() {
-		if (dbAvaus.status()) {
-			DBPelaajat dbPelaajat = new DBPelaajat(appContext);
-			dbPelaajat = new DBPelaajat(appContext);
-			dbPelaajat.setDBInstance(database);
-		}
-	}
-
-	public void openDBJoukkueet() {
-		if (dbAvaus.status()) {
-			DBJoukkueet dbJoukkueet = new DBJoukkueet(appContext);
-			dbJoukkueet = new DBJoukkueet(appContext);
-			dbJoukkueet.setDBInstance(database);
-		}
-	}
-
-	public void openDBKaupungit() {
-		if (dbAvaus.status()) {
-			DBKaupungit dbKaupungit = new DBKaupungit(appContext);
-			dbKaupungit = new DBKaupungit(appContext);
-			dbKaupungit.setDBInstance(database);
-		}
-	}
-
-	public void openDBRadat() {
-		if (dbAvaus.status()) {
-			DBRadat dbRadat = new DBRadat(appContext);
-			dbRadat = new DBRadat(appContext);
-			dbRadat.setDBInstance(database);
-		}
-	}
-
-	public void openDBVaylat() {
-		if (dbAvaus.status()) {
-			DBVaylat dbVaylat = new DBVaylat(appContext);
-			dbVaylat = new DBVaylat(appContext);
-			dbVaylat.setDBInstance(database);
-		}
-	}
-
-	public void openDBKierros() {
-		if (dbAvaus.status()) {
-			DBKierros dbKierros = new DBKierros(appContext);
-			dbKierros = new DBKierros(appContext);
-			dbKierros.setDBInstance(database);
-		}
-	}
-*/
     public List<Integer> getAktiivisetPelaajat() {
 		return aktiivisetPelaajat;
 	}
