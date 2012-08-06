@@ -66,7 +66,6 @@ public class FrisbeeGolfScores extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frisbee_golf_scores);
 
-        Log.d("FrisbeeGolfScores: ", "Ohjelma alkaa..");
         Log.d("onCreate: ", String.valueOf(1));
 
     	//näytön objektien alustukset
@@ -124,8 +123,6 @@ public class FrisbeeGolfScores extends Activity {
             String log = "Id: " + cn.getId() + " ,Kieli: " + cn.getKieli() + " ,Jarjestys: " + cn.getPelijarjestys() + " ,Metric: " + cn.getMetric() + " ,Vuoro: " + cn.getVuoronvaihto() + " ,DB: " + cn.getDb_versio();
             Log.d("Asetukset (main) : ", log);
         }
-        
-        Log.d("kieli : ", String.valueOf(kieli));
         
         //näytön objektien tekstien määritys kielisyyden mukaan
                 

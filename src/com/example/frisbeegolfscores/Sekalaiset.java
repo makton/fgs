@@ -105,19 +105,4 @@ public class Sekalaiset {
         String now = formatter.format(date);
         return now;
 	}
-	
-	public static void updateLanguage(Context context, SharedPreferences prefs) {
-		String lang = prefs.getString("settings_language", "");
-		if (lang.equals(""))
-			lang = "us";
-		updateLanguage(context, lang);
-	}
-
-	public static void updateLanguage(Context context, String lang) {
-		Locale locale = new Locale(lang);
-		Locale.setDefault(locale);
-		android.content.res.Configuration config = new android.content.res.Configuration();
-		config.locale = locale;
-		context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-	}
 }
