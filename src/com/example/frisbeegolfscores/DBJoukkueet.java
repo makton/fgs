@@ -47,6 +47,7 @@ public class DBJoukkueet {
             cursor.moveToFirst();
  
         Joukkueet joukkueet = new Joukkueet(cursor.getInt(0), cursor.getString(1));
+        cursor.close();
         return joukkueet;
     }
     

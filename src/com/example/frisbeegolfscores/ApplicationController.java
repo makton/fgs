@@ -13,41 +13,43 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ApplicationController extends Application {
+
 	//Application wide instance variables
 	private static ApplicationController singleton = null;
 	private Context appContext;
 	private Configuration config;
-	private SQLiteDatabase database;
-	private DBAvaus dbAvaus;  
-    
+	private SQLiteDatabase database = null;
+	private DBAvaus dbAvaus = null;  
+
     //Yleiset muuttujat
     //public int[] aktiivisetPelaajat;
     List<Integer> aktiivisetPelaajat = new ArrayList<Integer>();
     private int aktiivinenRata = 0;
     private int aktiivinenVayla = 0;
-    
+
     private Locale locale = null;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		Log.d("Application: onCreate:", String.valueOf(1));
 		
 	    //mŠŠritellŠŠn context
 		singleton = this;
 	    appContext = this.getApplicationContext();
-	    
+
 	    //avataan kantayhteys
 		openDB();
-		
+
 		//mŠŠritellŠŠn asetukset
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(singleton);
-		
-		config = getBaseContext().getResources().getConfiguration();
 
 		//mŠŠritellŠŠn ohjelman kielisyys
+		config = getBaseContext().getResources().getConfiguration();
         int kieli = Integer.parseInt(sharedPrefs.getString("settings_language", "0"));
         String lang = "";
-        
+
 		switch (kieli) {
 		case 0:
 			lang = "en_US";
@@ -61,22 +63,25 @@ public class ApplicationController extends Application {
 		default:
 			lang = "en_US";
 		}
-        
-        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang))
-        {
+
+        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
             locale = new Locale(lang);
             Locale.setDefault(locale);
             config.locale = locale;
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
 	}
-
+    
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
+    public void onTerminate() {
+        super.onTerminate();
+        closeDB();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (locale != null)
-        {
+        if (locale != null) {
             newConfig.locale = locale;
             Locale.setDefault(locale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
@@ -104,10 +109,14 @@ public class ApplicationController extends Application {
 	public void closeDB() {
         if (database != null && dbAvaus.status()){
         	dbAvaus.close();
+        	database = null;
         }		
 	}
 
 	public SQLiteDatabase getDBInstance() {
+		if (database == null || dbAvaus == null) {
+			openDB();
+		}
 		return database;
 	}
 	
@@ -149,5 +158,4 @@ public class ApplicationController extends Application {
 	public void setAktiivinenVayla(int aktiivinenVayla) {
 		this.aktiivinenVayla = aktiivinenVayla;
 	}
-
 }

@@ -49,6 +49,7 @@ public class DBKaupungit {
             cursor.moveToFirst();
  
         Kaupungit kaupungit = new Kaupungit(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+        cursor.close();
         return kaupungit;
     }
     

@@ -49,6 +49,7 @@ public class DBKierros {
             cursor.moveToFirst();
  
         Kierros kierros = new Kierros(cursor.getInt(0), cursor.getInt(1), cursor.getString(2));
+        cursor.close();
         return kierros;
     }
     

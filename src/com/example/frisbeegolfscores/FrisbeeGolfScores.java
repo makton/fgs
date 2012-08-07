@@ -64,6 +64,13 @@ public class FrisbeeGolfScores extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+        } else {
+
+        }
+        
         setContentView(R.layout.activity_frisbee_golf_scores);
 
         Log.d("onCreate: ", String.valueOf(1));
@@ -106,7 +113,7 @@ public class FrisbeeGolfScores extends Activity {
     	sharedPrefsEditor.putBoolean("settings_jarjestys",jarjestys);
     	sharedPrefsEditor.putString("settings_report",String.valueOf(raportti));
     	sharedPrefsEditor.commit();
-}
+    }
 
     @Override
     protected void onStart() {
@@ -183,17 +190,6 @@ public class FrisbeeGolfScores extends Activity {
         	mApplication.getInstance().closeDB();
         }
     }
-    /*
-    private Handler popupHandler = new Handler() {
-    	@Override
-    	public void handleMessage(Message msg) {
-    		switch (msg.what) {
-    		case DIALOG_GPS_DISABLED:
-    			showDialog(DIALOG_GPS_DISABLED);
-    			break;
-    		}
-    	}
-    };*/
     
     //näkymien vaihdot
 	public void onClick(View view) {
@@ -343,6 +339,5 @@ public class FrisbeeGolfScores extends Activity {
 	public void readHttpInfo(View view) {
 		HttpGet httpget = new HttpGet();
 		httpget.execute(new String[] { "http://www.google.fi" });
-
 	}
 }

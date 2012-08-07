@@ -61,6 +61,7 @@ public class DBVaylat {
             cursor.moveToFirst();
  
         Vaylat vaylat = new Vaylat(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6));
+        cursor.close();
         return vaylat;
     }
     

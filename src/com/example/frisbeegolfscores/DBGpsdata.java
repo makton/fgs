@@ -53,6 +53,7 @@ public class DBGpsdata {
             cursor.moveToFirst();
  
         Gpsdata gpsdata = new Gpsdata(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+        cursor.close();
         return gpsdata;
     }
     
@@ -97,33 +98,6 @@ public class DBGpsdata {
             	gpsdata.setX(cursor.getString(1));
             	gpsdata.setY(cursor.getString(2));
             	gpsdata.setTulokset_id(cursor.getInt(0));
-            	gpsdata.setPvm(cursor.getString(4));
-                // Adding contact to list
-            	listGpsdata.add(gpsdata);
-            } while (cursor.moveToNext());
-        }
- 
-		// Make sure to close the cursor
-		cursor.close();
-        // return contact list        
-        return listGpsdata;
-    }
-
-    // Getting All Contacts
-    public List<Gpsdata> haeGpsdataTulos(int tulokset_id) {
-        List<Gpsdata> listGpsdata = new ArrayList<Gpsdata>();
-
-        Cursor cursor = database.query(DBAlustus.TABLE_Gpsdata, new String[] { DBAlustus.COLUMN_Gpsdata_ID, DBAlustus.COLUMN_Gpsdata_x, DBAlustus.COLUMN_Gpsdata_y, DBAlustus.COLUMN_Gpsdata_tulokset_ID, DBAlustus.COLUMN_Gpsdata_pvm }, DBAlustus.COLUMN_Gpsdata_tulokset_ID + "=?", new String[] { String.valueOf(tulokset_id) }, null, null, null, null);
-//        Cursor cursor = database.query(DBAlustus.TABLE_Gpsdata, allGpsdataColumns, null, null, null, null, null);
- 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-            	Gpsdata gpsdata = new Gpsdata();
-            	gpsdata.setId(Long.parseLong(cursor.getString(0)));
-            	gpsdata.setX(cursor.getString(1));
-            	gpsdata.setY(cursor.getString(2));
-            	gpsdata.setTulokset_id(Integer.parseInt(cursor.getString(0)));
             	gpsdata.setPvm(cursor.getString(4));
                 // Adding contact to list
             	listGpsdata.add(gpsdata);

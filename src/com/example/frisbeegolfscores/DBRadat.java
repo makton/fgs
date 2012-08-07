@@ -74,6 +74,7 @@ public class DBRadat {
             cursor.moveToFirst();
  
         Radat radat = new Radat(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getString(10), cursor.getString(11), cursor.getString(12));
+        cursor.close();
         return radat;
     }
     

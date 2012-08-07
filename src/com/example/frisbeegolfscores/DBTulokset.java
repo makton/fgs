@@ -63,6 +63,7 @@ public class DBTulokset{
             cursor.moveToFirst();
  
         Tulokset tulokset = new Tulokset(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6), cursor.getString(7));
+        cursor.close();
         return tulokset;
     }
     
