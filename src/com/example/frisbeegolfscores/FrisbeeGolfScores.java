@@ -68,7 +68,7 @@ public class FrisbeeGolfScores extends Activity {
         if (savedInstanceState != null) {
             // Restore value of members from saved state
         } else {
-
+        	// Set default values
         }
         
         setContentView(R.layout.activity_frisbee_golf_scores);
@@ -195,10 +195,16 @@ public class FrisbeeGolfScores extends Activity {
 	public void onClick(View view) {
 		Log.d("Activity ",String.valueOf(0));
 		if (view == this.btnAsetukset) {
-			Log.d("Activity vaihtuu",String.valueOf(1));
+			Log.d("Activity vaihtuu ","Astukset");
 			Intent prefIntent = new Intent(this, ActivityAsetukset.class);
 			this.startActivity(prefIntent);
 		}
+		if (view == this.btnPelaajat) {
+			Log.d("Activity vaihtuu ","Pelaajat");
+			Intent prefIntent = new Intent(this, ActivityPelaajat.class);
+			this.startActivity(prefIntent);
+		}
+
 	}
     
     public void startGps(View view) {
@@ -332,12 +338,13 @@ public class FrisbeeGolfScores extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+
 			textView.setText(result);
 		}
 	}
-		
+	
 	public void readHttpInfo(View view) {
 		HttpGet httpget = new HttpGet();
-		httpget.execute(new String[] { "http://www.google.fi" });
+		httpget.execute(new String[] { "http://frisbeegolfradat.fi/radat" });
 	}
 }

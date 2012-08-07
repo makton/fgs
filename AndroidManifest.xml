@@ -43,6 +43,14 @@
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
-    </application>
+        <activity
+            android:name="com.example.frisbeegolfscores.ActivityPelaajat"
+            android:label="@string/pelaajat_taskbar_caption" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
+        </application>
 
 </manifest>

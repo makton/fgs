@@ -7,7 +7,7 @@
     <string name="language_finnish">Finnish</string>
     <string name="language_swedish">Swedish</string>
 	<string name="main_btn_settings">Settings</string>
-	<string name="main_btn_players">Playes</string>
+	<string name="main_btn_players">Players</string>
 	<string name="main_btn_teams">Teams</string>
 	<string name="main_taskbar_caption">FrisbeeGolf Scores</string>
 	<string name="settings_taskbar_caption">Settings</string>	
@@ -28,5 +28,6 @@
 	<string name="settings_advance">Auto advance to next round after everyone has finished current round</string>
 	<string name="settings_order">Show playing order</string>
 	<string name="settings_report">Style of email report</string>
+	<string name="pelaajat_taskbar_caption">Players</string>
 			
 </resources>
