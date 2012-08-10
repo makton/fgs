@@ -1,6 +1,7 @@
 package com.example.frisbeegolfscores;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.AsyncTask;
@@ -61,6 +62,9 @@ public class FrisbeeGolfScores extends Activity {
 	//staattiset muuttujat
     public static final int DIALOG_GPS_DISABLED = 0;
 	
+    List<HtmlData> listHtmlData = new ArrayList<HtmlData>();
+    HtmlData htmldata;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -287,10 +291,11 @@ public class FrisbeeGolfScores extends Activity {
 	}
 
 	private class HttpGet extends AsyncTask<String, Void, String> {
-
+		    
 		@Override
 		protected void onPreExecute() {
 	        // ...
+			textView.setText("Loading html address..");
 	    }
 
 		@Override
@@ -299,11 +304,11 @@ public class FrisbeeGolfScores extends Activity {
 			for (String osoite : urls) {
 				try {
 				    Http http = new Http();
-				    InputStream httpData = null;
+				    InputStream streamHttpData = null;
 				    if (connectionStatus == true) {
 				    	sekalaiset.disableConnectionReuseIfNecessary(); //FROYO
 				    	try {
-				    		httpData = http.GetUrl(osoite);
+				    		streamHttpData = http.GetUrl(osoite);
 				    	}
 				    	catch (Exception e) {
 				    		e.printStackTrace();
@@ -311,8 +316,8 @@ public class FrisbeeGolfScores extends Activity {
 				        finally {
 				            //Log
 				        }
-				    	if (httpData != null) {
-				    		String httpDataStr = sekalaiset.ConvertInputStream(httpData);
+				    	if (streamHttpData != null) {
+				    		String httpDataStr = sekalaiset.ConvertInputStream(streamHttpData);
 				    		if (httpDataStr != null) {
 				    			response += httpDataStr;
 				    		}
@@ -326,7 +331,11 @@ public class FrisbeeGolfScores extends Activity {
 					e.printStackTrace();
 				}
 			}
-			return response;
+			
+			HtmlParser html = new HtmlParser();
+			listHtmlData = html.parseHtml(response);
+
+			return "";
 		}
 		
 		//@Override
@@ -338,8 +347,16 @@ public class FrisbeeGolfScores extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			textView.setText("Exporting html data..");
+			String logData = "=";
+			logData += String.valueOf(listHtmlData.size());
+	        for (HtmlData cn : listHtmlData) {
+	            String log = cn.getId() + ", " + cn.getLuokitus() + ", " + cn.getRata() + ", " + cn.getLink() + ", " + cn.getKaupunki() + ", " + cn.getVaylia() + ", " + cn.getKartta();
+	            logData += log + "\n";
+	           
+	        }
+	        textView.setText(logData);
 
-			textView.setText(result);
 		}
 	}
 	

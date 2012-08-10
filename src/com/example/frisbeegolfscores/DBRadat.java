@@ -32,6 +32,7 @@ public class DBRadat {
 			DBAlustus.COLUMN_Radat_par,
 			DBAlustus.COLUMN_Radat_kartta,
 			DBAlustus.COLUMN_Radat_kuvaus,
+			DBAlustus.COLUMN_Radat_linkki,
 			DBAlustus.COLUMN_Radat_paivityspvm};
 	
 	public void setDBInstance(SQLiteDatabase database) {
@@ -56,6 +57,7 @@ public class DBRadat {
         values.put(DBAlustus.COLUMN_Radat_par, radat.getPar());
         values.put(DBAlustus.COLUMN_Radat_kartta, radat.getKartta());
         values.put(DBAlustus.COLUMN_Radat_kuvaus, radat.getKuvaus());
+        values.put(DBAlustus.COLUMN_Radat_linkki, radat.getLinkki());
         values.put(DBAlustus.COLUMN_Radat_paivityspvm, radat.getPaivityspvm());
 
 		Log.d("DBRadat: ", "Lis‰t‰‰n rata loppuu..");
@@ -69,11 +71,11 @@ public class DBRadat {
     public Radat getRata(int id) { 
     	Log.d("DBRadat: ", "Haetaan rata..");
 
-        Cursor cursor = database.query(DBAlustus.TABLE_Radat, new String[] { DBAlustus.COLUMN_Radat_kaupunki_ID, DBAlustus.COLUMN_Radat_nimi, DBAlustus.COLUMN_Radat_info, DBAlustus.COLUMN_Radat_luokitus, DBAlustus.COLUMN_Radat_osoite, DBAlustus.COLUMN_Radat_sijainti, DBAlustus.COLUMN_Radat_maksullinen, DBAlustus.COLUMN_Radat_vaylia, DBAlustus.COLUMN_Radat_par, DBAlustus.COLUMN_Radat_kartta, DBAlustus.COLUMN_Radat_kuvaus, DBAlustus.COLUMN_Radat_paivityspvm }, DBAlustus.COLUMN_Radat_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = database.query(DBAlustus.TABLE_Radat, new String[] { DBAlustus.COLUMN_Radat_kaupunki_ID, DBAlustus.COLUMN_Radat_nimi, DBAlustus.COLUMN_Radat_info, DBAlustus.COLUMN_Radat_luokitus, DBAlustus.COLUMN_Radat_osoite, DBAlustus.COLUMN_Radat_sijainti, DBAlustus.COLUMN_Radat_maksullinen, DBAlustus.COLUMN_Radat_vaylia, DBAlustus.COLUMN_Radat_par, DBAlustus.COLUMN_Radat_kartta, DBAlustus.COLUMN_Radat_kuvaus, DBAlustus.COLUMN_Radat_linkki, DBAlustus.COLUMN_Radat_paivityspvm }, DBAlustus.COLUMN_Radat_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
  
-        Radat radat = new Radat(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getString(10), cursor.getString(11), cursor.getString(12));
+        Radat radat = new Radat(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7), cursor.getInt(8), cursor.getInt(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13));
         cursor.close();
         return radat;
     }
@@ -96,6 +98,7 @@ public class DBRadat {
         values.put(DBAlustus.COLUMN_Radat_par, radat.getPar());
         values.put(DBAlustus.COLUMN_Radat_kartta, radat.getKartta());
         values.put(DBAlustus.COLUMN_Radat_kuvaus, radat.getKuvaus());
+        values.put(DBAlustus.COLUMN_Radat_linkki, radat.getLinkki());
         values.put(DBAlustus.COLUMN_Radat_paivityspvm, radat.getPaivityspvm());
 	 
 	    // updating row
@@ -130,7 +133,8 @@ public class DBRadat {
             	radat.setPar(cursor.getInt(9));
             	radat.setKartta(cursor.getString(10));
             	radat.setKuvaus(cursor.getString(11));
-            	radat.setPaivityspvm(cursor.getString(12));
+            	radat.setLinkki(cursor.getString(12));
+            	radat.setPaivityspvm(cursor.getString(13));
                 // Adding contact to list
             	listRadat.add(radat);
             } while (cursor.moveToNext());

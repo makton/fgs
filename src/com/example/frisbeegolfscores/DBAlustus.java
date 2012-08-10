@@ -66,6 +66,7 @@ public class DBAlustus extends SQLiteOpenHelper {
 	public static final String COLUMN_Radat_par = "par";
 	public static final String COLUMN_Radat_kartta = "kartta";
 	public static final String COLUMN_Radat_kuvaus = "kuvaus";
+	public static final String COLUMN_Radat_linkki = "linkki";
 	public static final String COLUMN_Radat_paivityspvm = "paivityspvm";
 	
 	// vaylat taulun kentät	
@@ -178,6 +179,7 @@ public class DBAlustus extends SQLiteOpenHelper {
 			+ COLUMN_Radat_par + " INTEGER, "
 			+ COLUMN_Radat_kartta + " TEXT, "
 			+ COLUMN_Radat_kuvaus + " TEXT, "
+			+ COLUMN_Radat_linkki + " TEXT, "
 			+ COLUMN_Radat_paivityspvm + " TEXT"
 			+ ");";
 

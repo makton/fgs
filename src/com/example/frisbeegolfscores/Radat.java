@@ -14,6 +14,7 @@ public class Radat {
 	private int par;
 	private String kartta;
 	private String kuvaus;
+	private String linkki;
 	private String paivityspvm;
 
 	// Empty constructor
@@ -30,9 +31,27 @@ public class Radat {
 		this.nimi = nimi;
 	}
 
+	public Radat(int kaupunki_id, String nimi, String info, String luokitus,
+			String osoite, String sijainti, int maksullinen, int vaylia,
+			int par, String kartta, String kuvaus, String linkki, String paivityspvm) {
+		this.kaupunki_id = kaupunki_id;
+		this.nimi = nimi;
+		this.info = info;
+		this.luokitus = luokitus;
+		this.osoite = osoite;
+		this.sijainti = sijainti;
+		this.maksullinen = maksullinen;
+		this.vaylia = vaylia;
+		this.par = par;
+		this.kartta = kartta;
+		this.kuvaus = kuvaus;
+		this.linkki = linkki;
+		this.paivityspvm = paivityspvm;
+	}
+
 	public Radat(int id, int kaupunki_id, String nimi, String info, String luokitus,
 			String osoite, String sijainti, int maksullinen, int vaylia,
-			int par, String kartta, String kuvaus, String paivityspvm) {
+			int par, String kartta, String kuvaus, String linkki, String paivityspvm) {
 		this.id = id;
 		this.kaupunki_id = kaupunki_id;
 		this.nimi = nimi;
@@ -45,6 +64,7 @@ public class Radat {
 		this.par = par;
 		this.kartta = kartta;
 		this.kuvaus = kuvaus;
+		this.linkki = linkki;
 		this.paivityspvm = paivityspvm;
 	}
 
@@ -142,6 +162,14 @@ public class Radat {
 	
 	public void setKuvaus(String kuvaus) {
 		this.kuvaus = kuvaus;
+	}
+
+	public String getLinkki() {
+		return linkki;
+	}
+	
+	public void setLinkki(String linkki) {
+		this.linkki = linkki;
 	}
 	
 	public String getPaivityspvm() {
